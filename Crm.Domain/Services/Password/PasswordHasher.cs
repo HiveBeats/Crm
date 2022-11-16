@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace Crm.Models.Infrastructure.Password;
+namespace Crm.Domain.Services.Password;
 public class HashSalt
 {
     public string Hash { get; set; }

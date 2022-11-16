@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Crm.Models.Domain;
+namespace Crm.Domain.Models;
 public class Resource
 {
     public long Id { get; set; }

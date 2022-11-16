@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Crm.Models.Domain;
+namespace Crm.Domain.Models;
 
 public enum OrderState
 {

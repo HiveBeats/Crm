@@ -1,6 +1,6 @@
-﻿using Crm.Models.Infrastructure.Password;
+﻿using Crm.Domain.Services.Password;
 
-namespace Crm.Models.Domain;
+namespace Crm.Domain.Models;
 public class User
 {
     public long Id { get; set; }

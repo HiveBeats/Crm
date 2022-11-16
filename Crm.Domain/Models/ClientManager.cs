@@ -1,4 +1,4 @@
-﻿namespace Crm.Models.Domain;
+﻿namespace Crm.Domain.Models;
 public class ClientManager
 {
     public long Id { get; set; }

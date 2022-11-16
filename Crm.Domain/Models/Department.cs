@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Crm.Models.Domain;
+namespace Crm.Domain.Models;
 
 public class Department
 {

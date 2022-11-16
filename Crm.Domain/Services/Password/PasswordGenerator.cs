@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 
-namespace Crm.Models.Infrastructure.Password;
+namespace Crm.Domain.Services.Password;
 public static class PasswordGenerator
 {
     private static string GetRandomString(int length, IEnumerable<char> characterSet)
