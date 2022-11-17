@@ -1,10 +1,11 @@
 ﻿using Crm.Domain.Services.Password;
+using System;
 
 namespace Crm.Domain.Models;
 public class User
 {
-    public long Id { get; set; }
-    public long EmployeeId { get; set; }
+    public Guid Id { get; set; }
+    public Guid EmployeeId { get; set; }
     public string Email { get; set; }
     public string HashedPassword { get; set; }
     public string Salt { get; set; }
@@ -17,6 +18,7 @@ public class User
         var hashedPassword = PasswordHasher.GenerateSaltedHash(64, password);
         var user = new User()
         {
+            Id = Guid.NewGuid(),
             Email = email,
             Employee = employee,
             HashedPassword = hashedPassword.Hash,

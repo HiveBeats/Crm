@@ -3,11 +3,18 @@
 namespace Crm.Domain.Models;
 public class Resource
 {
-    public long Id { get; set; }
+    public Resource(string name, decimal quantity = 0)
+    {
+        Id = Guid.NewGuid();
+        Name = name;
+        Quantity = quantity;
+    }
+
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public decimal Quantity { get; set; }
 
-    public void GetAmountOf(decimal amount)
+    public void RemoveAmountOf(decimal amount)
     {
         if (Quantity < amount)
         {

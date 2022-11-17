@@ -13,8 +13,17 @@ public enum OrderState
 
 public class Order
 {
-    public long Id { get; set; }
-    public long ClientId { get; set; }
+    public Order(Client client, string name, string description)
+    {
+        Id = Guid.NewGuid();
+        Client = client;
+        Name = name;
+        Description = description;
+        State = OrderState.Todo;
+    }
+
+    public Guid Id { get; set; }
+    public Guid ClientId { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public OrderState State { get; set; }
@@ -22,17 +31,6 @@ public class Order
     public Client Client { get; set; }
     public ICollection<Task> Tasks { get; set; }
     public ICollection<OrderResource> Resources { get; set; }
-
-    public static Order Create(Client client, string name, string description)
-    {
-        return new Order()
-        {
-            Client = client,
-            Name = name,
-            Description = description,
-            State = OrderState.Todo
-        };
-    }
 
     public void ChangeState(OrderState state)
     {

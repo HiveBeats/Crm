@@ -1,11 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Crm.Domain.Models;
 
 public class Department
 {
-    public long Id { get; set; }
-    public long? ParentId { get; set; }
+    public Department(string name, Department parent = null)
+    {
+        Id = Guid.NewGuid();
+        Name = name;
+        Parent = parent;
+    }
+
+    public Guid Id { get; set; }
+    public Guid? ParentId { get; set; }
     public string Name { get; set; }
 
     public Department? Parent { get; set; }

@@ -1,9 +1,11 @@
-﻿namespace Crm.Domain.Models;
+﻿using System;
+
+namespace Crm.Domain.Models;
 public class OrderResource
 {
-    public long Id { get; set; }
-    public long ResourceId { get; set; }
-    public long OrderId { get; set; }
+    public Guid Id { get; set; }
+    public Guid ResourceId { get; set; }
+    public Guid OrderId { get; set; }
     public decimal Amount { get; set; }
 
     public Resource Resource { get; set; }
@@ -11,10 +13,11 @@ public class OrderResource
 
     public static OrderResource AssignResources(Order order, Resource resource, decimal amount)
     {
-        resource.GetAmountOf(amount);
+        resource.RemoveAmountOf(amount);
 
         return new OrderResource()
         {
+            Id = Guid.NewGuid(),
             Order = order,
             Resource = resource,
             Amount = amount,

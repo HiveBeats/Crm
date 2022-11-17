@@ -1,9 +1,11 @@
-﻿namespace Crm.Domain.Models;
+﻿using System;
+
+namespace Crm.Domain.Models;
 public class ClientManager
 {
-    public long Id { get; set; }
-    public long EmployeeId { get; set; }
-    public long ClientId { get; set; }
+    public Guid Id { get; set; }
+    public Guid EmployeeId { get; set; }
+    public Guid ClientId { get; set; }
 
     public Employee Employee { get; set; }
     public Client Client { get; set; }
@@ -12,6 +14,7 @@ public class ClientManager
     {
         return new ClientManager()
         {
+            Id = Guid.NewGuid(),
             Employee = employee,
             Client = client
         };
