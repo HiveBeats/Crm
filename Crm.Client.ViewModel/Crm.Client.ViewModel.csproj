@@ -17,4 +17,9 @@
     <ProjectReference Include="..\Crm.Client.Application\Crm.Client.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Departments\" />
+    <Folder Include="Orders\" />
+  </ItemGroup>
+
 </Project>

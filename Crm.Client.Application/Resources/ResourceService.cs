@@ -1,11 +1,12 @@
-﻿using Crm.Infrastructure.Database;
+﻿using Crm.Domain.Models;
+using Crm.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Crm.Client.Application.Resource;
+namespace Crm.Client.Application.Resources;
 
-public interface IResourceService
+public interface IResourceService : IItemsService<Resource>
 {
-	Task<IReadOnlyCollection<Crm.Domain.Models.Resource>> GetAll();
+	Task<IReadOnlyCollection<Resource>> GetAll();
 	Task<Guid> Create(string name, decimal quantity);
 }
 public class ResourceService : IResourceService

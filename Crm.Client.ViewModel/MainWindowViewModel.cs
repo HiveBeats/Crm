@@ -1,4 +1,5 @@
-﻿using Crm.Client.ViewModel.Common;
+﻿using Crm.Client.ViewModel.Clients;
+using Crm.Client.ViewModel.Common;
 using Splat;
 
 namespace Crm.Client.ViewModel;

@@ -2,8 +2,8 @@
 using Crm.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Crm.Client.Application.Client;
-public interface IClientService
+namespace Crm.Client.Application.Clients;
+public interface IClientService : IItemsService<Crm.Domain.Models.Client>
 {
     Task<IReadOnlyCollection<Crm.Domain.Models.Client>> GetAll();
     Task<Crm.Domain.Models.Client> GetById(Guid id);

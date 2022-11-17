@@ -1,8 +1,9 @@
-﻿using Crm.Infrastructure.Database;
+﻿using Crm.Domain.Models;
+using Crm.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Crm.Client.Application.Employee;
-public interface IEmployeeService
+namespace Crm.Client.Application.Employees;
+public interface IEmployeeService : IItemsService<Employee>
 {
     Task<IReadOnlyCollection<Crm.Domain.Models.Employee>> GetAll();
     Task<Crm.Domain.Models.Employee> GetById(Guid id);
