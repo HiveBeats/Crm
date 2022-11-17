@@ -1,6 +1,9 @@
-﻿using Crm.Client.Application;
+﻿using AutoMapper;
+using Crm.Client.Application;
 using ReactiveUI;
+using Splat;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Crm.Client.ViewModel.Common;
 public class ItemsViewModelBase<T> : ViewModelBase
@@ -26,18 +29,20 @@ public class ItemsViewModelBase<T> : ViewModelBase
 	}
 }
 
-public class ItemsViewModel<T> : ItemsViewModelBase<T>
+public class ItemsViewModel<T, TDto> : ItemsViewModelBase<TDto>
 	where T : class
+	where TDto : class
 {
-
+	protected readonly IMapper _mapper;
 	protected IItemsService<T> _itemsService;
 	public ItemsViewModel(ViewModelActivator activator) : base(activator)
 	{
-
+		_mapper = Locator.Current.GetService<IMapper>();
 	}
 	protected override async System.Threading.Tasks.Task HandleActivation()
 	{
-		Items = new ObservableCollection<T>(await _itemsService.GetAll());
+		var items = await _itemsService.GetAll();		
+        Items = new ObservableCollection<TDto>(items.Select(_mapper.Map<T, TDto>));
 	}
 }
 

@@ -1,4 +1,4 @@
-using Avalonia;
+using Applicat = Avalonia.Application;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
@@ -7,7 +7,7 @@ using Crm.Client.Avalonia.ViewModels;
 using Crm.Client.Avalonia.Views;
 
 namespace Crm.Client.Avalonia;
-public partial class App : Application
+public partial class App : Applicat
 {
     public override void Initialize()
     {

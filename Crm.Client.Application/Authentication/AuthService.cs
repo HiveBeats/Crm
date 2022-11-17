@@ -56,7 +56,7 @@ public class AuthService : IAuthService
 
         if (user != null && PasswordHasher.VerifyPassword(password, user.HashedPassword, user.Salt))
         {
-            var authDto = new AuthDto() { Id = user.Id };
+            var authDto = new AuthDto() { Id = user.Id.ToString() };
             await File.WriteAllTextAsync(FileName, System.Text.Json.JsonSerializer.Serialize<AuthDto>(authDto));
 
             return Result.Ok<User>(user);

@@ -8,7 +8,7 @@ public class ViewLocator : IDataTemplate
 {
     public IControl Build(object data)
     {
-        var name = data.GetType().FullName!.Replace("ViewModel", "View");
+        var name = data.GetType().FullName!.Replace("Crm.Client.ViewModel", "Crm.Client.Avalonia.Views").Replace("ViewModel", "View");
         var type = Type.GetType(name);
 
         if (type != null)
@@ -22,6 +22,6 @@ public class ViewLocator : IDataTemplate
     public bool Match(object data)
     {
 
-        return data is ViewModelBase;
+        return data is Crm.Client.ViewModel.Common.ViewModelBase;
     }
 }

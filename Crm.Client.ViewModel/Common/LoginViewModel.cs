@@ -1,5 +1,6 @@
 ﻿using Crm.Client.Application.Authentication;
 using ReactiveUI;
+using Splat;
 using System.Windows.Input;
 
 namespace Crm.Client.ViewModel.Common;
@@ -11,10 +12,10 @@ public class LoginViewModel : ViewModelBase
 
 	private readonly IAuthConfiguration _auth;
 	private readonly IAuthService _authService;
-	public LoginViewModel(IAuthConfiguration authConfiguration, IAuthService authService) : base(new ViewModelActivator())
+	public LoginViewModel(IAuthConfiguration authConfiguration = null, IAuthService authService = null) : base(new ViewModelActivator())
 	{
-		_auth = authConfiguration;
-		_authService = authService;
+		_auth = authConfiguration ?? Locator.Current.GetService<IAuthConfiguration>();
+		_authService = authService ?? Locator.Current.GetService<IAuthService>();
 
 		LoginCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
