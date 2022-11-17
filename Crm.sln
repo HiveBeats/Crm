@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crm.Domain", "Crm.Domain\Cr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crm.Infrastructure.Database", "Crm.Infrastructure.Database\Crm.Infrastructure.Database.csproj", "{B328E202-5E97-43FD-A1A3-D2A2CD8960B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crm.Client.ViewModel", "Crm.Client.ViewModel\Crm.Client.ViewModel.csproj", "{CF69AF8B-F3B2-4D7D-96CE-E2F7B7513537}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crm.Client.ViewModel", "Crm.Client.ViewModel\Crm.Client.ViewModel.csproj", "{CF69AF8B-F3B2-4D7D-96CE-E2F7B7513537}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crm.Client.Application", "Crm.Client.Application\Crm.Client.Application.csproj", "{1E0EC21D-8C02-4F25-BCA0-849FC4EA45D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crm.Client.Application", "Crm.Client.Application\Crm.Client.Application.csproj", "{1E0EC21D-8C02-4F25-BCA0-849FC4EA45D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crm.Client.Avalonia", "Crm.Client.Avalonia\Crm.Client.Avalonia.csproj", "{5D02CD1C-B8E0-4E95-A9E6-218CC12739B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{1E0EC21D-8C02-4F25-BCA0-849FC4EA45D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E0EC21D-8C02-4F25-BCA0-849FC4EA45D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E0EC21D-8C02-4F25-BCA0-849FC4EA45D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D02CD1C-B8E0-4E95-A9E6-218CC12739B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D02CD1C-B8E0-4E95-A9E6-218CC12739B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D02CD1C-B8E0-4E95-A9E6-218CC12739B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D02CD1C-B8E0-4E95-A9E6-218CC12739B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
