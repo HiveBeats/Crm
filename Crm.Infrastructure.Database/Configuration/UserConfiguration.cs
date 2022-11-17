@@ -10,5 +10,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.Email).HasMaxLength(256);
         builder.Property(x => x.HashedPassword).HasMaxLength(256);
         builder.Property(x => x.Salt).HasMaxLength(256);
+
+        builder.HasIndex(x => x.Email);
     }
 }

@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crm", "Crm\Crm.csproj", "{E01B61D4-FF42-4EC9-BD3C-6B4CCCE90C5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crm", "Crm\Crm.csproj", "{E01B61D4-FF42-4EC9-BD3C-6B4CCCE90C5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crm.Domain", "Crm.Domain\Crm.Domain.csproj", "{FA5AC5D2-D13B-4020-A092-CABE3459C834}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crm.Domain", "Crm.Domain\Crm.Domain.csproj", "{FA5AC5D2-D13B-4020-A092-CABE3459C834}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crm.Infrastructure.Database", "Crm.Infrastructure.Database\Crm.Infrastructure.Database.csproj", "{B328E202-5E97-43FD-A1A3-D2A2CD8960B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crm.Infrastructure.Database", "Crm.Infrastructure.Database\Crm.Infrastructure.Database.csproj", "{B328E202-5E97-43FD-A1A3-D2A2CD8960B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crm.Client.ViewModel", "Crm.Client.ViewModel\Crm.Client.ViewModel.csproj", "{CF69AF8B-F3B2-4D7D-96CE-E2F7B7513537}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crm.Client.Application", "Crm.Client.Application\Crm.Client.Application.csproj", "{1E0EC21D-8C02-4F25-BCA0-849FC4EA45D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{B328E202-5E97-43FD-A1A3-D2A2CD8960B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B328E202-5E97-43FD-A1A3-D2A2CD8960B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B328E202-5E97-43FD-A1A3-D2A2CD8960B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF69AF8B-F3B2-4D7D-96CE-E2F7B7513537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF69AF8B-F3B2-4D7D-96CE-E2F7B7513537}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF69AF8B-F3B2-4D7D-96CE-E2F7B7513537}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF69AF8B-F3B2-4D7D-96CE-E2F7B7513537}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E0EC21D-8C02-4F25-BCA0-849FC4EA45D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E0EC21D-8C02-4F25-BCA0-849FC4EA45D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E0EC21D-8C02-4F25-BCA0-849FC4EA45D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E0EC21D-8C02-4F25-BCA0-849FC4EA45D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
