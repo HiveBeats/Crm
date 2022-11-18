@@ -1,13 +1,21 @@
 ﻿using Crm.Client.Application;
+using Crm.Domain;
+using DynamicData.Binding;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ReactiveUI;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Reactive.Concurrency;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Crm.Client.ViewModel.Common;
-public class ItemsViewModelBase<T> : ViewModelBase
-	where T : class
+public interface IItemViewModel
+{
+	IEntity CurrentItem { get; }
+}
+public class ItemsViewModelBase<T> : ViewModelBase, IItemViewModel
+	where T : class, IEntity
 {
 	private ObservableCollection<T> _items;
 	private T _currentItem;
@@ -27,10 +35,12 @@ public class ItemsViewModelBase<T> : ViewModelBase
 		get => _currentItem;
 		set => this.RaiseAndSetIfChanged(ref _currentItem, value);
 	}
+
+	IEntity IItemViewModel.CurrentItem => this.CurrentItem;
 }
 
 public class ItemsViewModel<T> : ItemsViewModelBase<T>
-	where T : class
+	where T : class, IEntity
 {
 	protected IItemsService<T> _itemsService;
 	public ItemsViewModel(ViewModelActivator activator) : base(activator)
@@ -46,8 +56,8 @@ public class ItemsViewModel<T> : ItemsViewModelBase<T>
 }
 
 public class RelativeItemsViewModel<T, TRelative> : ItemsViewModelBase<TRelative>
-	where T : class
-	where TRelative : class
+	where T : class, IEntity
+	where TRelative : class, IEntity
 {
 	protected T _ownerItem;
 	protected IRelativeItemsService<T, TRelative> _itemsService;

@@ -16,14 +16,14 @@ public class NavigationViewModel:ViewModelBase,IPageViewModel
 	{
 		ResourcesViewModel = Locator.Current.GetService<ResourcesViewModel>();
 		EmployeesViewModel = Locator.Current.GetService<EmployeesViewModel>();
-		ClientsViewModel = Locator.Current.GetService<ClientsViewModel>();
+		ClientsViewModel = Locator.Current.GetService<ClientsPageViewModel>();
 
 		CurrentContext = ClientsViewModel;
 	}
 
 	public ResourcesViewModel ResourcesViewModel { get; set; }
 	public EmployeesViewModel EmployeesViewModel { get; set; }
-	public ClientsViewModel ClientsViewModel { get; set; }
+	public ClientsPageViewModel ClientsViewModel { get; set; }
 
 	public ViewModelBase CurrentContext 
 	{ 
