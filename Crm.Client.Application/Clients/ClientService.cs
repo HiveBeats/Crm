@@ -49,17 +49,19 @@ public class ClientService: ServiceBase, IClientService
         IReadOnlyCollection<Crm.Domain.Models.Client> result;
         using (var db = GetDb())
         {
+            /*
             var clientsWithManagers = await db.ClientManagers
                 .Include(x => x.Client)
                 .Include(x => x.Employee)
                 .AsNoTracking()
                 .ToListAsync();
-
-            result = (IReadOnlyCollection<Crm.Domain.Models.Client>)clientsWithManagers.Select(x =>
-            {
-                x.Client.Manager = x.Employee;
-                return x.Client;
-            });
+            */
+            result = await db.Clients.AsNoTracking().ToListAsync();
+            //result = (IReadOnlyCollection<Crm.Domain.Models.Client>)clientsWithManagers.Select(x =>
+            //{
+            //    x.Client.Manager = x.Employee;
+            //    return x.Client;
+            //});
         }
         return result;
     }

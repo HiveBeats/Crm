@@ -8,11 +8,13 @@ using Splat;
 namespace Crm.Client.ViewModel;
 public static class Bootstrapper
 {
-    private static void InjectDbContextFactory()
+    private static DbContextFactory InjectDbContextFactory()
     {
         var connection = "Host=localhost;Username=john;Password=passw0rd;Database=todosdb;";
         var factory = new DbContextFactory(connection);
         Locator.CurrentMutable.RegisterConstant<IDbContextFactory>(factory);
+
+        return factory;
     }
 
     public static void InjectServices()
@@ -23,9 +25,10 @@ public static class Bootstrapper
         });
         var mapper = new Mapper(configuration);
 
-        InjectDbContextFactory();
+        var dbContextFactory = InjectDbContextFactory();
+
         Locator.CurrentMutable.RegisterConstant<IMapper>(new Mapper(configuration));
-        Locator.CurrentMutable.RegisterConstant<IClientService>(new MockClientService());
+        Locator.CurrentMutable.RegisterConstant<IClientService>(new ClientService(dbContextFactory));
     }
 
     public static void InjectViewModels()

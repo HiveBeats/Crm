@@ -1,7 +1,11 @@
 ﻿using Crm.Infrastructure.Database;
 using ReactiveUI;
 using Splat;
+using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Crm.Client.ViewModel.Common;
@@ -27,7 +31,9 @@ public class ViewModelBase : ReactiveObject, IActivatableViewModel
     }
     public ViewModelActivator Activator { get; }
 
-    protected virtual async Task HandleActivation() { await Task.CompletedTask; }
+    protected virtual void HandleActivation() { }
 
     protected virtual void HandleDeactivation() { }
+
+    protected virtual async Task OnLoaded(IScheduler arg1, CancellationToken arg2) { await Task.CompletedTask; }
 }

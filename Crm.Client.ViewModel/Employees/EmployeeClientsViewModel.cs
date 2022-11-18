@@ -1,6 +1,8 @@
 ﻿using Crm.Client.Application.Employees;
 using Crm.Client.ViewModel.Common;
 using Crm.Domain.Models;
+using ReactiveUI;
+using System.Reactive.Concurrency;
 
 namespace Crm.Client.ViewModel.Employees;
 public class EmployeeClientsViewModel : RelativeItemsViewModel<Employee, Domain.Models.Client>
@@ -9,5 +11,6 @@ public class EmployeeClientsViewModel : RelativeItemsViewModel<Employee, Domain.
 	{
 		_ownerItem = employee;
 		_itemsService = employeeClientsService;
-	}
+        RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
+    }
 }

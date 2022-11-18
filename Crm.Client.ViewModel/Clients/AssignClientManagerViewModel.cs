@@ -55,7 +55,7 @@ public class AssignClientManagerViewModel : ViewModelBase
         await _clientService.AssignManager(client, employee);
     }, canExecute: _employeeValidation));
 
-    protected override async System.Threading.Tasks.Task HandleActivation()
+    protected override async void HandleActivation()
     {
         Employees = new ObservableCollection<Employee>(await _employeeService.GetAll());
     }

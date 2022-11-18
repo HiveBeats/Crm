@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using Crm.Client.Application;
+﻿using Crm.Client.Application;
 using ReactiveUI;
-using Splat;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Reactive.Concurrency;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Crm.Client.ViewModel.Common;
 public class ItemsViewModelBase<T> : ViewModelBase
@@ -35,13 +35,14 @@ public class ItemsViewModel<T> : ItemsViewModelBase<T>
 	protected IItemsService<T> _itemsService;
 	public ItemsViewModel(ViewModelActivator activator) : base(activator)
 	{
-		
-	}
-	protected override async System.Threading.Tasks.Task HandleActivation()
+        
+    }
+
+	protected override async Task OnLoaded(IScheduler arg1, CancellationToken arg2)
 	{
-		var items = await _itemsService.GetAll();		
+        var items = await _itemsService.GetAll();
         Items = new ObservableCollection<T>(items);
-	}
+    }
 }
 
 public class RelativeItemsViewModel<T, TRelative> : ItemsViewModelBase<TRelative>
@@ -54,8 +55,9 @@ public class RelativeItemsViewModel<T, TRelative> : ItemsViewModelBase<TRelative
 	{
 
 	}
-	protected override async System.Threading.Tasks.Task HandleActivation()
-	{
-		Items = new ObservableCollection<TRelative>(await _itemsService.GetAll(_ownerItem));
-	}
+
+    protected override async Task OnLoaded(IScheduler arg1, CancellationToken arg2)
+    {
+        Items = new ObservableCollection<TRelative>(await _itemsService.GetAll(_ownerItem));
+    }
 }
