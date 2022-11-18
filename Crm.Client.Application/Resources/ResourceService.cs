@@ -1,33 +1,45 @@
 ﻿using Crm.Domain.Models;
 using Crm.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Crm.Client.Application.Resources;
 
-public interface IResourceService : IItemsService<Resource>
+public interface IResourceService:IItemsService<Resource>
 {
-	Task<IReadOnlyCollection<Resource>> GetAll();
 	Task<Guid> Create(string name, decimal quantity);
 }
-public class ResourceService : IResourceService
+public class ResourceService : ServiceBase, IResourceService
 {
-	private CrmDbContext _dbContext;
-	public ResourceService(CrmDbContext dbContext)
+	public ResourceService(IDbContextFactory factory): base(factory)
 	{
-		_dbContext = dbContext;
+		
 	}
 
 	public async Task<Guid> Create(string name, decimal quantity)
 	{
-		var resource = new Crm.Domain.Models.Resource(name, quantity);
-		_dbContext.Resources.Add(resource);
-		await _dbContext.SaveChangesAsync();
+		Guid id = Guid.NewGuid();
+		using (var db = GetDb())
+		{
+            var resource = new Crm.Domain.Models.Resource(name, quantity);
 
-		return resource.Id;
+            db.Resources.Add(resource);
+            await db.SaveChangesAsync();
+
+            id = resource.Id;
+        }
+		
+
+		return id;
 	}
 
 	public async Task<IReadOnlyCollection<Domain.Models.Resource>> GetAll()
 	{
-		return await _dbContext.Resources.AsNoTracking().ToListAsync();
+		IReadOnlyCollection<Domain.Models.Resource> result;
+		using (var db = GetDb())
+		{
+			result = await db.Resources.AsNoTracking().ToListAsync();
+        }
+		return result;
 	}
 }

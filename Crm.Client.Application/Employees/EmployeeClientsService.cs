@@ -7,20 +7,23 @@ public interface IEmployeeClientsService : IRelativeItemsService<Employee, Domai
 {
 
 }
-public class EmployeeClientsService : IEmployeeClientsService
+public class EmployeeClientsService : ServiceBase, IEmployeeClientsService
 {
-    private readonly CrmDbContext _dbContext;
-    public EmployeeClientsService(CrmDbContext dbContext)
+    public EmployeeClientsService(IDbContextFactory factory): base(factory)
     {
-        _dbContext = dbContext;
     }
     public async Task<IReadOnlyCollection<Domain.Models.Client>> GetAll(Employee item)
     {
-        return await _dbContext.ClientManagers
-            .Include(x => x.Client)
-            .Where(x => x.EmployeeId == item.Id)
-            .AsNoTracking()
-            .Select(x => x.Client)
-            .ToListAsync();
+        IReadOnlyCollection<Domain.Models.Client> result;
+        using (var db = GetDb())
+        {
+            result = await db.ClientManagers
+                .Include(x => x.Client)
+                .Where(x => x.EmployeeId == item.Id)
+                .AsNoTracking()
+                .Select(x => x.Client)
+                .ToListAsync();
+        }
+        return result;
     }
 }

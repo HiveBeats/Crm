@@ -1,29 +1,38 @@
 ﻿using Crm.Domain.Models;
 using Crm.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Crm.Client.Application.Employees;
 public interface IEmployeeService : IItemsService<Employee>
 {
-    Task<IReadOnlyCollection<Crm.Domain.Models.Employee>> GetAll();
-    Task<Crm.Domain.Models.Employee> GetById(Guid id);
+    Task<Employee> GetById(Guid id);
 }
-public class EmployeeService : IEmployeeService
+public class EmployeeService : ServiceBase, IEmployeeService
 {
-    private readonly CrmDbContext _dbContext;
-
-    public EmployeeService(CrmDbContext crmDbContext)
+    public EmployeeService(IDbContextFactory dbContextFactory): base(dbContextFactory)
     {
-        _dbContext = crmDbContext;
+
     }
 
-    public async Task<IReadOnlyCollection<Domain.Models.Employee>> GetAll()
+    public async Task<IReadOnlyCollection<Employee>> GetAll()
     {
-        return await _dbContext.Employees.AsNoTracking().ToListAsync();
+        IReadOnlyCollection<Employee> result;
+        using (var db = GetDb())
+        {
+            result =  await db.Employees.AsNoTracking().ToListAsync();
+        }
+        return result;
     }
 
-    public async Task<Domain.Models.Employee> GetById(Guid id)
+    public async Task<Employee> GetById(Guid id)
     {
-        return await _dbContext.Employees.FirstAsync(x => x.Id == id);
+        Employee result;
+        using (var db = GetDb())
+        {
+            result = await db.Employees.FirstAsync(x => x.Id == id);
+        }
+
+        return result;
     }
 }

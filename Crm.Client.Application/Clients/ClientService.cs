@@ -1,6 +1,7 @@
 ﻿using Crm.Domain.Models;
 using Crm.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using Task = System.Threading.Tasks.Task;
 
 namespace Crm.Client.Application.Clients;
@@ -11,48 +12,68 @@ public interface IClientService : IItemsService<Crm.Domain.Models.Client>
     Task<Guid> Create(string name, string contact);
     Task<bool> AssignManager(Crm.Domain.Models.Client client, Crm.Domain.Models.Employee employee);
 }
-public class ClientService : IClientService
+public class ClientService: ServiceBase, IClientService
 {
-    private readonly CrmDbContext _dbContext;
-    public ClientService(CrmDbContext dbContext)
+    public ClientService(IDbContextFactory dbContextFactory): base(dbContextFactory)
     {
-        _dbContext = dbContext;
     }
 
     public async Task<bool> AssignManager(Domain.Models.Client client, Domain.Models.Employee employee)
     {
-        var relation = ClientManager.Assign(client, employee);
-        _dbContext.ClientManagers.Add(relation);
-        return await _dbContext.SaveChangesAsync() > 0;
+        bool result = false;
+        using (var db = GetDb())
+        {
+            var relation = ClientManager.Assign(client, employee);
+            db.ClientManagers.Add(relation);
+            result = await db.SaveChangesAsync() > 0;
+        }
+        return result;
     }
 
     public async Task<Guid> Create(string name, string contact)
     {
-        var client = new Crm.Domain.Models.Client(name, contact);
-        _dbContext.Clients.Add(client);
-        await _dbContext.SaveChangesAsync();
+        Guid result = Guid.Empty;
+        using (var db = GetDb())
+        {
+            var client = new Crm.Domain.Models.Client(name, contact);
+            db.Clients.Add(client);
+            await db.SaveChangesAsync();
+            result = client.Id;
+        }
 
-        return client.Id;
+        return result;
     }
 
     public async Task<IReadOnlyCollection<Crm.Domain.Models.Client>> GetAll()
     {
-        var clientsWithManagers = await _dbContext.ClientManagers
-            .Include(x => x.Client)
-            .Include(x => x.Employee)
-            .AsNoTracking()
-            .ToListAsync();
-
-        return (IReadOnlyCollection<Crm.Domain.Models.Client>)clientsWithManagers.Select(x =>
+        IReadOnlyCollection<Crm.Domain.Models.Client> result;
+        using (var db = GetDb())
         {
-            x.Client.Manager = x.Employee;
-            return x.Client;
-        });
+            var clientsWithManagers = await db.ClientManagers
+                .Include(x => x.Client)
+                .Include(x => x.Employee)
+                .AsNoTracking()
+                .ToListAsync();
+
+            result = (IReadOnlyCollection<Crm.Domain.Models.Client>)clientsWithManagers.Select(x =>
+            {
+                x.Client.Manager = x.Employee;
+                return x.Client;
+            });
+        }
+        return result;
     }
 
-    public Task<Domain.Models.Client> GetById(Guid id)
+    public async Task<Domain.Models.Client> GetById(Guid id)
     {
-        return _dbContext.Clients.FirstAsync(x => x.Id == id);
+        Domain.Models.Client result;
+        using(var db = GetDb())
+        {
+            result = await db.Clients.FirstAsync(x => x.Id == id);
+        }
+
+        return result;
+        
     }
 }
 

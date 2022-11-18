@@ -5,19 +5,21 @@ using Microsoft.EntityFrameworkCore;
 namespace Crm.Client.Application.Orders;
 public interface IOrdersService : IItemsService<Order>
 {
-    Task<IReadOnlyCollection<Order>> GetAll();
 }
-public class OrdersService : IOrdersService
+public class OrdersService :ServiceBase, IOrdersService
 {
-    private readonly CrmDbContext _db;
-
-    public OrdersService(CrmDbContext db)
+    public OrdersService(IDbContextFactory factory): base(factory)
     {
-        _db = db;
+        
     }
 
     public async Task<IReadOnlyCollection<Order>> GetAll()
     {
-        return await _db.Orders.AsNoTracking().ToListAsync();
+        IReadOnlyCollection<Order> result;
+        using (var db = GetDb())
+        {
+            result = await db.Orders.AsNoTracking().ToListAsync();
+        }
+        return result;
     }
 }

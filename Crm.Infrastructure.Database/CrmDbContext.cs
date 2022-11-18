@@ -6,9 +6,20 @@ namespace Crm.Infrastructure.Database;
 
 public class CrmDbContext : DbContext
 {
+    private string _connectionString;
     public CrmDbContext(DbContextOptions options) : base(options)
     {
 
+    }
+
+    public CrmDbContext(string connectionString): base()
+    {
+        _connectionString = connectionString;
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseNpgsql(_connectionString, sqlOpt => sqlOpt.CommandTimeout(500));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

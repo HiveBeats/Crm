@@ -8,31 +8,40 @@ public interface IClientOrdersService : IRelativeItemsService<Domain.Models.Clie
     Task<Guid> Create(Crm.Domain.Models.Client client, string name, string description);
     Task<IReadOnlyCollection<Order>> GetClientOrders(Crm.Domain.Models.Client client);
 }
-public class ClientOrdersService : IClientOrdersService
+public class ClientOrdersService: ServiceBase, IClientOrdersService
 {
-    private readonly CrmDbContext _dbContext;
-    public ClientOrdersService(CrmDbContext dbContext)
-    {
-        _dbContext = dbContext;
+    public ClientOrdersService(IDbContextFactory dbContextFactory): base(dbContextFactory)
+    {    
     }
 
     public async Task<Guid> Create(Domain.Models.Client client, string name, string description)
     {
-        var retrievedClient = await _dbContext.Clients.FindAsync(client.Orders);
-        var order = new Order(retrievedClient, name, description);
-        _dbContext.Orders.Add(order);
-        await _dbContext.SaveChangesAsync();
+        Guid result = Guid.Empty;
+        using(var db = GetDb())
+        {
+            var retrievedClient = await db.Clients.FindAsync(client.Orders);
+            var order = new Order(retrievedClient, name, description);
+            db.Orders.Add(order);
+            await db.SaveChangesAsync();
+            result = order.Id;
+        }
 
-        return order.Id;
+        return result;
     }
 
     public async Task<IReadOnlyCollection<Order>> GetAll(Domain.Models.Client item) => await GetClientOrders(item);
 
     public async Task<IReadOnlyCollection<Order>> GetClientOrders(Crm.Domain.Models.Client client)
     {
-        return await _dbContext.Orders
-            .Where(x => x.ClientId == client.Id)
-            .AsNoTracking()
-            .ToListAsync();
+        IReadOnlyCollection<Order> orders;
+        using (var db = GetDb())
+        {
+            orders = await db.Orders
+                .Where(x => x.ClientId == client.Id)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        return orders;
     }
 }
