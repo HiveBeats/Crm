@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Crm.Domain.Models;
 
-public class Department
+public class Department: IEntity
 {
     protected Department() { }
     public Department(string name, Department parent = null)

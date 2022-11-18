@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Crm.Domain.Models;
-public class Resource
+public class Resource:IEntity
 {
     protected Resource() { }
     public Resource(string name, decimal quantity = 0)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Crm.Domain.Models;
-public class Client
+public class Client: IEntity
 {
     protected Client() { }
     public Client(string name, string contact)

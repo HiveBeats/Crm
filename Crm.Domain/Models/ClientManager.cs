@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Crm.Domain.Models;
-public class ClientManager
+public class ClientManager: IEntity
 {
     protected ClientManager() { }
     public Guid Id { get; set; }

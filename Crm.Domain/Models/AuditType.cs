@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace Crm.Domain.Models;
-public class AuditType
+public class AuditType: IEntity
 {
     protected AuditType() { }
     public AuditType(string name)

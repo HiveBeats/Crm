@@ -9,7 +9,7 @@ public enum TaskState
     Done = 3
 }
 
-public class Task
+public class Task:IEntity
 {
     protected Task() { }
     public Task(Order order, Employee employee, string name, string description)

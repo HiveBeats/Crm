@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Crm.Domain.Models;
-public class OrderResource
+public class OrderResource:IEntity
 {
     protected OrderResource() { }
     public Guid Id { get; set; }

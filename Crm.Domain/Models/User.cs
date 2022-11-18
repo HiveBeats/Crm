@@ -2,7 +2,7 @@
 using System;
 
 namespace Crm.Domain.Models;
-public class User
+public class User:IEntity
 {
     protected User() { }
     public Guid Id { get; set; }

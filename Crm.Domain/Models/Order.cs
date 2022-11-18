@@ -11,13 +11,13 @@ public enum OrderState
     Done = 2
 }
 
-public class Order
+public class Order: IEntity
 {
     protected Order() { }
     public Order(Client client, string name, string description)
     {
         Id = Guid.NewGuid();
-        Client = client;
+        ClientId = client.Id;
         Name = name;
         Description = description;
         State = OrderState.Todo;

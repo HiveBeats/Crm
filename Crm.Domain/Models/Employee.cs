@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Crm.Domain.Models;
 
-public class Employee
+public class Employee:IEntity
 {
     protected Employee() { }
     public Guid Id { get; set; }

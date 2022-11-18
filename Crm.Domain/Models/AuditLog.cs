@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Crm.Domain.Models;
-public class AuditLog
+public class AuditLog: IEntity
 {
     protected AuditLog() { }
     public AuditLog(AuditType type, string message)
