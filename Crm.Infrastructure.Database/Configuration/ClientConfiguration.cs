@@ -10,6 +10,6 @@ public class ClientConfiguration : IEntityTypeConfiguration<Client>
         builder.Property(x => x.Name).HasMaxLength(64);
         builder.Property(x => x.Contact).HasMaxLength(256);
 
-        builder.HasKey(x => x.Name);
+        builder.HasIndex(x => x.Name);
     }
 }

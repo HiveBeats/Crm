@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Crm.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(CrmDbContext))]
-    [Migration("20221118074740_initial")]
+    [Migration("20221118212238_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,60 +36,62 @@ namespace Crm.Infrastructure.Database.Migrations
                     b.Property<string>("Message")
                         .HasColumnType("text");
 
-                    b.Property<string>("TypeName")
-                        .IsRequired()
-                        .HasColumnType("character varying(128)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("TypeName");
+                    b.HasIndex("AuditTypeId");
 
                     b.ToTable("AuditLogs");
                 });
 
             modelBuilder.Entity("Crm.Domain.Models.AuditType", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Name")
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.HasKey("Id");
 
-                    b.HasKey("Name");
+                    b.HasIndex("Name");
 
                     b.ToTable("AuditTypes");
                 });
 
             modelBuilder.Entity("Crm.Domain.Models.Client", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Contact")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.Property<string>("Name")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
 
-                    b.HasKey("Name");
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name");
 
                     b.ToTable("Clients");
 
                     b.HasData(
                         new
                         {
-                            Name = "Irina Victorovna",
+                            Id = new Guid("2d8a7e44-f935-4105-b251-6c8d7f55da62"),
                             Contact = "+79455684645",
-                            Id = new Guid("6c5949f4-529c-44a9-b9a6-07c9d42b85a5")
+                            Name = "Irina Victorovna"
                         },
                         new
                         {
-                            Name = "Alexander Ivanovich",
+                            Id = new Guid("97456af1-cd14-4cfc-ac73-dcafe1a8cc71"),
                             Contact = "ivanovich.a@mail.ru",
-                            Id = new Guid("e1ddae00-91f2-4737-a1b0-92b3cfb6e587")
+                            Name = "Alexander Ivanovich"
                         });
                 });
 
@@ -102,16 +104,12 @@ namespace Crm.Infrastructure.Database.Migrations
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ClientName")
-                        .IsRequired()
-                        .HasColumnType("character varying(64)");
-
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientName");
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("EmployeeId");
 
@@ -120,23 +118,20 @@ namespace Crm.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Crm.Domain.Models.Department", b =>
                 {
-                    b.Property<Guid?>("ParentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
-                    b.Property<Guid>("ParentId1")
+                    b.Property<Guid?>("ParentId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("ParentId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("ParentId1");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Departments");
                 });
@@ -176,10 +171,6 @@ namespace Crm.Infrastructure.Database.Migrations
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ClientName")
-                        .IsRequired()
-                        .HasColumnType("character varying(64)");
-
                     b.Property<string>("Description")
                         .HasMaxLength(512)
                         .HasColumnType("character varying(512)");
@@ -193,7 +184,7 @@ namespace Crm.Infrastructure.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientName");
+                    b.HasIndex("ClientId");
 
                     b.ToTable("Orders");
                 });
@@ -306,7 +297,7 @@ namespace Crm.Infrastructure.Database.Migrations
                 {
                     b.HasOne("Crm.Domain.Models.AuditType", "Type")
                         .WithMany("AuditLogs")
-                        .HasForeignKey("TypeName")
+                        .HasForeignKey("AuditTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -317,7 +308,7 @@ namespace Crm.Infrastructure.Database.Migrations
                 {
                     b.HasOne("Crm.Domain.Models.Client", "Client")
                         .WithMany()
-                        .HasForeignKey("ClientName")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -336,9 +327,7 @@ namespace Crm.Infrastructure.Database.Migrations
                 {
                     b.HasOne("Crm.Domain.Models.Department", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
                 });
@@ -358,7 +347,7 @@ namespace Crm.Infrastructure.Database.Migrations
                 {
                     b.HasOne("Crm.Domain.Models.Client", "Client")
                         .WithMany("Orders")
-                        .HasForeignKey("ClientName")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

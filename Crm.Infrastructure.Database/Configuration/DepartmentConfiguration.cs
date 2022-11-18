@@ -8,6 +8,6 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
     public void Configure(EntityTypeBuilder<Department> builder)
     {
         builder.Property(x => x.Name).HasMaxLength(128);
-        builder.HasKey(x => x.ParentId);
+        builder.HasIndex(x => x.ParentId);
     }
 }

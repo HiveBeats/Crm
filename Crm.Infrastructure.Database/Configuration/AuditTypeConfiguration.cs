@@ -8,6 +8,6 @@ public class AuditTypeConfiguration : IEntityTypeConfiguration<AuditType>
     public void Configure(EntityTypeBuilder<AuditType> builder)
     {
         builder.Property(x => x.Name).HasMaxLength(128);
-        builder.HasKey(x => x.Name);
+        builder.HasIndex(x => x.Name);
     }
 }
