@@ -2,14 +2,15 @@
 using Crm.Client.ViewModel.Common;
 using Crm.Domain.Models;
 using ReactiveUI;
+using Splat;
 using System.Reactive.Concurrency;
 
 namespace Crm.Client.ViewModel.Resources;
-public class ResourcesViewModel : ItemsViewModel<Resource>
+public class ResourcesViewModel : ItemsViewModel<Resource>, IPageViewModel
 {
-    public ResourcesViewModel(IResourceService resourceService) : base(new ViewModelActivator())
+    public ResourcesViewModel() : base(new ViewModelActivator())
     {
-        _itemsService = resourceService;
+        _itemsService = Locator.Current.GetService<IResourceService>();
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 }

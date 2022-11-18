@@ -5,17 +5,17 @@ using System.Windows.Input;
 
 namespace Crm.Client.ViewModel.Common;
 
-public class LoginViewModel : ViewModelBase
+public class LoginViewModel : ViewModelBase, IPageViewModel
 {
 	private string _userName;
 	private string _password;
 
 	private readonly IAuthConfiguration _auth;
 	private readonly IAuthService _authService;
-	public LoginViewModel(IAuthConfiguration authConfiguration = null, IAuthService authService = null) : base(new ViewModelActivator())
+	public LoginViewModel() : base(new ViewModelActivator())
 	{
-		_auth = authConfiguration ?? Locator.Current.GetService<IAuthConfiguration>();
-		_authService = authService ?? Locator.Current.GetService<IAuthService>();
+		_auth = Locator.Current.GetService<IAuthConfiguration>();
+		_authService = Locator.Current.GetService<IAuthService>();
 
 		LoginCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
