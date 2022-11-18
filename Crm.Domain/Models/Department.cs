@@ -5,6 +5,7 @@ namespace Crm.Domain.Models;
 
 public class Department
 {
+    protected Department() { }
     public Department(string name, Department parent = null)
     {
         Id = Guid.NewGuid();

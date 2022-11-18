@@ -3,6 +3,7 @@
 namespace Crm.Domain.Models;
 public class AuditLog
 {
+    protected AuditLog() { }
     public AuditLog(AuditType type, string message)
     {
         Id = Guid.NewGuid();

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Crm.Domain.Models;
 public class Client
 {
+    protected Client() { }
     public Client(string name, string contact)
     {
         Id = Guid.NewGuid();

@@ -13,6 +13,7 @@ public enum OrderState
 
 public class Order
 {
+    protected Order() { }
     public Order(Client client, string name, string description)
     {
         Id = Guid.NewGuid();

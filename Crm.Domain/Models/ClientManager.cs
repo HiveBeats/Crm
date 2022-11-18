@@ -3,6 +3,7 @@
 namespace Crm.Domain.Models;
 public class ClientManager
 {
+    protected ClientManager() { }
     public Guid Id { get; set; }
     public Guid EmployeeId { get; set; }
     public Guid ClientId { get; set; }

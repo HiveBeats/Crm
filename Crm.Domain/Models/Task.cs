@@ -11,6 +11,7 @@ public enum TaskState
 
 public class Task
 {
+    protected Task() { }
     public Task(Order order, Employee employee, string name, string description)
     {
 

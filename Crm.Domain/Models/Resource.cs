@@ -3,6 +3,7 @@
 namespace Crm.Domain.Models;
 public class Resource
 {
+    protected Resource() { }
     public Resource(string name, decimal quantity = 0)
     {
         Id = Guid.NewGuid();

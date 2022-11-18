@@ -4,6 +4,7 @@ using System;
 namespace Crm.Domain.Models;
 public class User
 {
+    protected User() { }
     public Guid Id { get; set; }
     public Guid EmployeeId { get; set; }
     public string Email { get; set; }

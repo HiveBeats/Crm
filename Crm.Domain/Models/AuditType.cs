@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace Crm.Domain.Models;
 public class AuditType
 {
+    protected AuditType() { }
     public AuditType(string name)
     {
         Id = Guid.NewGuid();

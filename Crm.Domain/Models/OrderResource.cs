@@ -3,6 +3,7 @@
 namespace Crm.Domain.Models;
 public class OrderResource
 {
+    protected OrderResource() { }
     public Guid Id { get; set; }
     public Guid ResourceId { get; set; }
     public Guid OrderId { get; set; }
