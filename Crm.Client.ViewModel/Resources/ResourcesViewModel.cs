@@ -4,7 +4,7 @@ using Crm.Domain.Models;
 using ReactiveUI;
 
 namespace Crm.Client.ViewModel.Resources;
-public class ResourcesViewModel : ItemsViewModel<Resource, ResourceDto>
+public class ResourcesViewModel : ItemsViewModel<Resource>
 {
     public ResourcesViewModel(IResourceService resourceService) : base(new ViewModelActivator())
     {

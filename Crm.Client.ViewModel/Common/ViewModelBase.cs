@@ -1,12 +1,16 @@
-﻿using ReactiveUI;
+﻿using Crm.Infrastructure.Database;
+using ReactiveUI;
+using Splat;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
 
 namespace Crm.Client.ViewModel.Common;
 public class ViewModelBase : ReactiveObject, IActivatableViewModel
 {
+    private readonly IDbContextFactory _dbContextFactory;
     public ViewModelBase(ViewModelActivator activator)
     {
+        _dbContextFactory = Locator.Current.GetService<IDbContextFactory>();
         Activator = activator;
         this.WhenActivated(disposables =>
         {

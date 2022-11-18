@@ -2,11 +2,9 @@
 using Crm.Client.ViewModel.Common;
 using ReactiveUI;
 using Splat;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Crm.Client.ViewModel.Clients;
-public class ClientsViewModel : ItemsViewModel<Domain.Models.Client, ClientDto>
+public class ClientsViewModel : ItemsViewModel<Domain.Models.Client>
 {
     public ClientsViewModel(IClientService clientService = null) : base(new ViewModelActivator())
     {

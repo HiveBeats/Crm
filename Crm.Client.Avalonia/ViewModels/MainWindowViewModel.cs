@@ -1,9 +1,5 @@
-﻿
-using AutoMapper;
-using Crm.Client.Application.Clients;
+﻿using Crm.Client.ViewModel;
 using Crm.Client.ViewModel.Clients;
-using Crm.Client.ViewModel.Common;
-using Crm.Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using Splat;
