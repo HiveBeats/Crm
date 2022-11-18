@@ -10,7 +10,6 @@
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <Folder Include="Views\Common\" />
-    <Folder Include="Views\Clients\" />
     <None Remove=".gitignore" />
   </ItemGroup>
 
@@ -29,5 +28,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Crm.Client.ViewModel\Crm.Client.ViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Clients\CreateClientOrderWindow.axaml.cs">
+      <DependentUpon>CreateClientOrderWindow.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -1,0 +1,46 @@
+<Window     xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Crm.Client.Avalonia.Views.Clients.CreateClientOrderWindow"
+			Title="Зарегистрировать клиентский заказ">
+	<StackPanel VerticalAlignment="Center"
+					HorizontalAlignment="Center"
+					Width="300">
+		<!--<ProgressBar HorizontalAlignment="Stretch"
+                     IsIndeterminate="{Binding IsBusy}"
+                     IsVisible="{Binding IsBusy}"
+                     Margin="0 5" />-->
+		<!--<StackPanel IsVisible="{Binding HasErrorMessage}"
+                    Background="#ffeeee"
+                    Margin="0 0 0 5">
+			<TextBlock Text="{Binding ErrorMessage}"
+                       Foreground="#990000"
+                       TextWrapping="Wrap"
+                       Margin="10" />
+		</StackPanel>-->
+		<TextBlock Text="Название:" Margin="0 5" />
+		<TextBox Watermark="Название заказа" Text="{Binding Name, Mode=TwoWay}" />
+		<!--<TextBlock x:Name="UsernameValidation"
+                   Foreground="{DynamicResource ErrorBrush}"
+                   TextWrapping="Wrap" />-->
+		<TextBlock Text="Описание:" Margin="0 5" />
+		<TextBox Text="{Binding Description, Mode=TwoWay}"
+                 Watermark="Укажите важные детали..."/>
+		<!--<TextBlock x:Name="PasswordValidation"
+                   Foreground="{DynamicResource ErrorBrush}"
+                   TextWrapping="Wrap" />-->
+		<Button Content="Ок"
+                HorizontalAlignment="Stretch"
+                Command="{Binding CreateCommand}"
+                Margin="0 10" />
+		<Button Content="Отмена"
+                HorizontalAlignment="Stretch"
+                Command="{Binding CancelCommand}"
+                Margin="0 10" />
+		<!--<TextBlock x:Name="FormValidation"
+                   Foreground="{DynamicResource ErrorBrush}"
+                   TextWrapping="Wrap" />-->
+	</StackPanel>
+</Window>

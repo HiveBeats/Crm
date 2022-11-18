@@ -19,7 +19,7 @@ public class ClientOrdersService: ServiceBase, IClientOrdersService
         Guid result = Guid.Empty;
         using(var db = GetDb())
         {
-            var retrievedClient = await db.Clients.FindAsync(client.Orders);
+            var retrievedClient = await db.Clients.FirstAsync(c => c.Id == client.Id);
             var order = new Order(retrievedClient, name, description);
             db.Orders.Add(order);
             await db.SaveChangesAsync();
