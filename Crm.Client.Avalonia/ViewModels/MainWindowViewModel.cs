@@ -15,7 +15,7 @@ public class MainWindowViewModel : ViewModelBase
         
         Bootstrapper.InjectServices();
         Bootstrapper.InjectViewModels();
-        CurrentViewModel = Locator.Current.GetService<ClientsViewModel>();
+        CurrentViewModel = Locator.Current.GetService<NavigationViewModel>();
     }
 
     

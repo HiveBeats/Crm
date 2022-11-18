@@ -6,8 +6,8 @@
              x:Class="Crm.Client.Avalonia.Views.Clients.ClientsView">
 	<DataGrid Name="MyDataGrid" Items="{Binding Items}" AutoGenerateColumns="False">
 		<DataGrid.Columns>
-			<DataGridTextColumn Header="Forename"  Binding="{Binding Name}"/>
-			<DataGridTextColumn Header="Surname" Binding="{Binding Contact}" />
+			<DataGridTextColumn Header="Имя"  Binding="{Binding Name}"/>
+			<DataGridTextColumn Header="Контакт" Binding="{Binding Contact}" />
 		</DataGrid.Columns>
 		
 	</DataGrid>

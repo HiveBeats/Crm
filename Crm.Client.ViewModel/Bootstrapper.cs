@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Crm.Client.Application;
 using Crm.Client.Application.Clients;
 using Crm.Client.Application.Resources;
 using Crm.Client.ViewModel.Clients;
 using Crm.Client.ViewModel.Common;
 using Crm.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore.Internal;
 using Splat;
 using System;
 using System.Linq;
@@ -20,6 +22,23 @@ public static class Bootstrapper
         return factory;
     }
 
+    private static void InjectDatabaseServices(IDbContextFactory dbContextFactory)
+    {
+        var assembly = typeof(ServiceBase).Assembly;
+        var services = (from assemblyType in assembly.GetExportedTypes()
+                          where assemblyType.GetInterface(nameof(IDatabaseService)) != null
+                          select assemblyType)
+                          .ToArray();
+
+        foreach (var svc in services)
+        {
+            foreach (var ifc in svc.GetInterfaces())
+            {
+                Locator.CurrentMutable.Register(() => Activator.CreateInstance(svc, dbContextFactory), ifc);
+            }
+        }
+    }
+
     public static void InjectServices()
     {
         var configuration = new MapperConfiguration(cfg =>
@@ -27,11 +46,10 @@ public static class Bootstrapper
             cfg.CreateMap<Domain.Models.Client, ClientDto>();
         });
         var mapper = new Mapper(configuration);
+        Locator.CurrentMutable.RegisterConstant<IMapper>(new Mapper(configuration));
 
         var dbContextFactory = InjectDbContextFactory();
-
-        Locator.CurrentMutable.RegisterConstant<IMapper>(new Mapper(configuration));
-        Locator.CurrentMutable.RegisterConstant<IClientService>(new ClientService(dbContextFactory));
+        InjectDatabaseServices(dbContextFactory);
     }
 
     public static void InjectViewModels()

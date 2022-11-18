@@ -1,7 +1,11 @@
 ﻿using Crm.Infrastructure.Database;
 
 namespace Crm.Client.Application;
-public class ServiceBase
+public interface IDatabaseService
+{
+
+}
+public class ServiceBase: IDatabaseService
 {
 	protected readonly IDbContextFactory _dbContextFactory;
 	public ServiceBase(IDbContextFactory dbContextFactory)
