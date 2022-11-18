@@ -1,10 +1,13 @@
 
 using Crm.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Logging;
+using Npgsql.Logging;
 
 namespace Crm.Infrastructure.Database;
 
-public class CrmDbContext : DbContext
+public class CrmDbContext : DbContext, IDesignTimeDbContextFactory<CrmDbContext>
 {
     private string _connectionString;
     public CrmDbContext(DbContextOptions options) : base(options)
@@ -12,19 +15,36 @@ public class CrmDbContext : DbContext
 
     }
 
-    public CrmDbContext(string connectionString): base()
+    public CrmDbContext(string connectionString) : base()
     {
-        _connectionString = connectionString;
+        _connectionString = connectionString ?? "Host=localhost;Username=john;Password=passw0rd;Database=todosdb;"; ;
+    }
+
+    public CrmDbContext(): base()
+    {
+        _connectionString = "Host=localhost;Username=john;Password=passw0rd;Database=todosdb;";
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(_connectionString, sqlOpt => sqlOpt.CommandTimeout(500));
+        optionsBuilder.UseNpgsql(_connectionString ?? "Host=localhost;Username=john;Password=passw0rd;Database=todosdb;", sqlOpt => sqlOpt.CommandTimeout(500));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CrmDbContext).Assembly);
+        modelBuilder.Entity<Client>().HasData(
+            new Client("Irina Victorovna", "+79455684645"),
+            new Client("Alexander Ivanovich", "ivanovich.a@mail.ru")
+        );
+    }
+
+    public CrmDbContext CreateDbContext(string[] args)
+    {
+        var optionsBuilder = new DbContextOptionsBuilder<CrmDbContext>();
+        optionsBuilder.UseNpgsql("Host=localhost;Username=john;Password=passw0rd;Database=todosdb;");
+
+        return new CrmDbContext(optionsBuilder.Options);
     }
 
     public DbSet<Client> Clients { get; set; }
