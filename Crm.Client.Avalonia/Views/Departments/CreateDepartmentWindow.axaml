@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Crm.Client.Avalonia.Views.Departments.CreateDepartmentWindow"
+		Width="480" Height="640">
+	<StackPanel VerticalAlignment="Center"
+					  HorizontalAlignment="Center"
+					  Width="300">
+		<TextBlock Text="Название:" Margin="0 5" />
+		<TextBox Watermark="Название подразделения" Text="{Binding Name, Mode=TwoWay}" />		
+		
+		<Button Content="Ок"
+                HorizontalAlignment="Stretch"
+                Command="{Binding CreateCommand}"
+                Margin="0 10" />
+		<Button Content="Отмена"
+                HorizontalAlignment="Stretch"
+                Command="{Binding CancelCommand}"
+                Margin="0 10" />
+	</StackPanel>
+</Window>

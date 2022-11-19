@@ -34,5 +34,8 @@
     <Compile Update="Views\Clients\CreateClientOrderWindow.axaml.cs">
       <DependentUpon>CreateClientOrderWindow.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Departments\CreateDepartmentWindow.axaml.cs">
+      <DependentUpon>CreateDepartmentWindow.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

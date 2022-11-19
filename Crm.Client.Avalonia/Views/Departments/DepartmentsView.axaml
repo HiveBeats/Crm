@@ -1,0 +1,17 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Crm.Client.Avalonia.Views.Departments.DepartmentsView">
+	<DockPanel>
+		<StackPanel DockPanel.Dock="Top">
+			<Button Command="{Binding CreateCommand}">Создать подразделение</Button>
+		</StackPanel>
+		<DataGrid Name="MyDataGrid" Items="{Binding Items}" SelectedItem="{Binding CurrentItem, Mode=TwoWay}" AutoGenerateColumns="False">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Имя"  Binding="{Binding Name}"/>
+			</DataGrid.Columns>
+		</DataGrid>
+	</DockPanel>
+</UserControl>

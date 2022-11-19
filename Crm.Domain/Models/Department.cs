@@ -10,7 +10,11 @@ public class Department: IEntity
     {
         Id = Guid.NewGuid();
         Name = name;
-        Parent = parent;
+        if (parent != null)
+        {
+            ParentId = parent.Id;
+        }
+        
     }
 
     public Guid Id { get; set; }
