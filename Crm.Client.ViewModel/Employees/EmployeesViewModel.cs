@@ -10,7 +10,7 @@ public class EmployeesViewModel : ItemsViewModel<Employee>, IPageViewModel
 {
 	public EmployeesViewModel() : base(new ReactiveUI.ViewModelActivator())
 	{
-		_itemsService = Locator.Current.GetService<IEmployeeService>();
+		ItemsService = Locator.Current.GetService<IEmployeeService>();
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 }

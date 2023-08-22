@@ -9,8 +9,8 @@ public class ClientOrdersViewModel : RelativeItemsViewModel<Domain.Models.Client
 {
 	public ClientOrdersViewModel(Crm.Domain.Models.Client client, IClientOrdersService clientOrdersService) : base(new ReactiveUI.ViewModelActivator())
 	{
-		_ownerItem = client;
-		_itemsService = clientOrdersService;
+		OwnerItem = client;
+		ItemsService = clientOrdersService;
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 }

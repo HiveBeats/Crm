@@ -9,8 +9,8 @@ public class CreateResourceViewModel : ViewModelBase
     private string _name;
     private decimal _quantity = 0;
     private IReactiveCommand _createCommand;
-    private IObservable<bool> _nameValidation; //todo: validations dictionary in base model
-    private IResourceService _resourceService;
+    private readonly IObservable<bool> _nameValidation; //todo: validations dictionary in base model
+    private readonly IResourceService _resourceService;
     public CreateResourceViewModel(IResourceService resourceService) : base(new ViewModelActivator())
     {
         _resourceService = resourceService;
@@ -30,8 +30,8 @@ public class CreateResourceViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _quantity, value);
     }
 
-    public IReactiveCommand CreateCommand => _createCommand ?? (_createCommand = ReactiveCommand.CreateFromTask(async () =>
+    public IReactiveCommand CreateCommand => _createCommand ??= ReactiveCommand.CreateFromTask(async () =>
     {
         await _resourceService.Create(Name, Quantity);
-    }, canExecute: _nameValidation));
+    }, canExecute: _nameValidation);
 }

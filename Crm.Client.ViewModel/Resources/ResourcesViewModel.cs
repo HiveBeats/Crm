@@ -10,7 +10,7 @@ public class ResourcesViewModel : ItemsViewModel<Resource>, IPageViewModel
 {
     public ResourcesViewModel() : base(new ViewModelActivator())
     {
-        _itemsService = Locator.Current.GetService<IResourceService>();
+        ItemsService = Locator.Current.GetService<IResourceService>();
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 }

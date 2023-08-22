@@ -9,8 +9,8 @@ public class EmployeeClientsViewModel : RelativeItemsViewModel<Employee, Domain.
 {
 	public EmployeeClientsViewModel(Employee employee, IEmployeeClientsService employeeClientsService) : base(new ReactiveUI.ViewModelActivator())
 	{
-		_ownerItem = employee;
-		_itemsService = employeeClientsService;
+		OwnerItem = employee;
+		ItemsService = employeeClientsService;
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 }

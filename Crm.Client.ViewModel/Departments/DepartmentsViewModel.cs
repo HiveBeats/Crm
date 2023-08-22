@@ -20,7 +20,7 @@ public class DepartmentsViewModel : ItemsViewModel<Department>, IPageViewModel
 {
     public DepartmentsViewModel() : base(new ViewModelActivator())
     {
-        _itemsService = Locator.Current.GetService<IDepartmentsService>();
+        ItemsService = Locator.Current.GetService<IDepartmentsService>();
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
 
         ShowCreateDialog = new Interaction<CreateDepartmentViewModel, Department>();
