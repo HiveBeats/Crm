@@ -17,12 +17,13 @@ public class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IPageViewM
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
 
         ShowCreateOrderDialog = new Interaction<CreateClientOrderViewModel, Unit>();
-        var createOrderValidation = this.WhenAny(x => x.CurrentItem, item => item != null);
+        var createOrderValidation = this.WhenAny((x) => x.CurrentItem, (currentItem) => currentItem.Value != null);
+        //todo: разобраться, почему не работает CanExecute
         CreateOrderCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var vm = new CreateClientOrderViewModel(CurrentItem, Locator.Current.GetService<IClientOrdersService>());
-
             await ShowCreateOrderDialog.Handle(vm);
+            OnMasterChanged();
         }, canExecute: createOrderValidation);
     }
     public ICommand CreateOrderCommand { get; }

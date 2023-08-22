@@ -9,16 +9,20 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Splat;
 using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Crm.Client.ViewModel;
 public static class Bootstrapper
 {
     private static DbContextFactory InjectDbContextFactory()
     {
-        var connection = "Host=localhost;Username=john;Password=passw0rd;Database=todosdb;";
+        var connection = "Host=178.250.156.227;Username=crm;Password=uoQutsHtrFLyLjKw;Database=crm;";
         var factory = new DbContextFactory(connection);
         Locator.CurrentMutable.RegisterConstant<IDbContextFactory>(factory);
-
+        using (var db = factory.Create())
+        {
+            db.Database.Migrate();
+        }
         return factory;
     }
 

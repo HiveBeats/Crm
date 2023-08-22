@@ -16,6 +16,11 @@ public class ClientOrdersService: ServiceBase, IClientOrdersService
 
     public async Task<Guid> Create(Domain.Models.Client client, string name, string description)
     {
+        if (client == null)
+        {
+            throw new ArgumentNullException(nameof(client));
+        }
+        
         Guid result = Guid.Empty;
         using(var db = GetDb())
         {

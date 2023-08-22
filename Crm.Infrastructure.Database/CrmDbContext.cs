@@ -12,7 +12,7 @@ public class CrmDbContext : DbContext, IDesignTimeDbContextFactory<CrmDbContext>
     private string _connectionString;
     public CrmDbContext(DbContextOptions options) : base(options)
     {
-
+        
     }
 
     public CrmDbContext(string connectionString) : base()

@@ -1,4 +1,5 @@
-﻿using Crm.Client.Application;
+﻿using System;
+using Crm.Client.Application;
 using Crm.Domain;
 using DynamicData.Binding;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -37,6 +38,13 @@ public class ItemsViewModelBase<T> : ViewModelBase, IItemViewModel
 	}
 
 	IEntity IItemViewModel.CurrentItem => this.CurrentItem;
+
+	public event EventHandler MasterChanged;
+
+	public void OnMasterChanged()
+	{
+		MasterChanged?.Invoke(this, EventArgs.Empty);
+	}
 }
 
 public class ItemsViewModel<T> : ItemsViewModelBase<T>

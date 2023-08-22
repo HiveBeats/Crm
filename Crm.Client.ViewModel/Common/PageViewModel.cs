@@ -25,4 +25,6 @@ public class PageViewModel<T, TDetail>: ViewModelBase, IPageViewModel
 		get => _detailViewModel; 
 		set => this.RaiseAndSetIfChanged(ref _detailViewModel, value); 
 	}
+	
+	
 }
