@@ -5,6 +5,7 @@ using Crm.Client.ViewModel.Resources;
 using ReactiveUI;
 using Splat;
 using System.Reactive;
+using JetBrains.Annotations;
 
 namespace Crm.Client.ViewModel;
 
@@ -12,38 +13,35 @@ public class NavigationViewModel:ViewModelBase, IPageViewModel
 {
 	private ViewModelBase _currentContext;
 	private ReactiveCommand<string, Unit> _navigateCommand;
+	private readonly ResourcesViewModel _resourcesViewModel;
+	private readonly DepartmentsViewModel _departmentsViewModel;
+	private readonly ClientsPageViewModel _clientsViewModel;
+
 	public NavigationViewModel(): base(new ReactiveUI.ViewModelActivator())
 	{
-		ResourcesViewModel = Locator.Current.GetService<ResourcesViewModel>();
-		DepartmentsViewModel = Locator.Current.GetService<DepartmentsViewModel>();
-		ClientsViewModel = Locator.Current.GetService<ClientsPageViewModel>();
+		_resourcesViewModel = Locator.Current.GetService<ResourcesViewModel>();
+		_departmentsViewModel = Locator.Current.GetService<DepartmentsViewModel>();
+		_clientsViewModel = Locator.Current.GetService<ClientsPageViewModel>();
 
-		CurrentContext = ClientsViewModel;
+		CurrentContext = _clientsViewModel;
 	}
 
-	public ResourcesViewModel ResourcesViewModel { get; set; }
-	public DepartmentsViewModel DepartmentsViewModel { get; set; }
-	public ClientsPageViewModel ClientsViewModel { get; set; }
-
+	[UsedImplicitly]
 	public ViewModelBase CurrentContext 
 	{ 
 		get => _currentContext; 
 		set => this.RaiseAndSetIfChanged(ref _currentContext, value); 
 	}
 
-	public ReactiveCommand<string, Unit> NavigateCommand => _navigateCommand ?? (_navigateCommand = ReactiveCommand.Create<string>((name) =>
+	[UsedImplicitly]
+	public ReactiveCommand<string, Unit> NavigateCommand => _navigateCommand ??= ReactiveCommand.Create<string>((name) =>
 	{
-		switch(name)
+		CurrentContext = name switch
 		{
-			case "Client":
-				CurrentContext = ClientsViewModel;
-				break;
-			case "Resource":
-				CurrentContext = ResourcesViewModel;
-				break;
-			case "Employee":
-				CurrentContext = DepartmentsViewModel;
-				break;
-		}
-	}));
+			"Client" => _clientsViewModel,
+			"Resource" => _resourcesViewModel,
+			"Employee" => _departmentsViewModel,
+			_ => CurrentContext
+		};
+	});
 }

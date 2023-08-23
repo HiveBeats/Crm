@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Reactive.Concurrency;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Crm.Client.ViewModel.Common;
 public interface IItemViewModel
@@ -23,12 +24,14 @@ public class ItemsViewModelBase<T> : ViewModelBase, IItemViewModel
 
 	}
 
+	[UsedImplicitly]
 	public ObservableCollection<T> Items
 	{
 		get => _items ??= new ObservableCollection<T>();
 		set => this.RaiseAndSetIfChanged(ref _items, value);
 	}
 
+	[UsedImplicitly]
 	public T CurrentItem
 	{
 		get => _currentItem;

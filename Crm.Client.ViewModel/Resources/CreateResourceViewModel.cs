@@ -11,6 +11,7 @@ public class CreateResourceViewModel : ViewModelBase
     private IReactiveCommand _createCommand;
     private readonly IObservable<bool> _nameValidation; //todo: validations dictionary in base model
     private readonly IResourceService _resourceService;
+    
     public CreateResourceViewModel(IResourceService resourceService) : base(new ViewModelActivator())
     {
         _resourceService = resourceService;

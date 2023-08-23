@@ -5,6 +5,7 @@ using Crm.Domain.Models;
 using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
+using JetBrains.Annotations;
 
 namespace Crm.Client.ViewModel.Clients;
 public class AssignClientManagerViewModel : ViewModelBase
@@ -13,9 +14,10 @@ public class AssignClientManagerViewModel : ViewModelBase
     private ObservableCollection<Employee> _employees;
     private Employee _employee;
     private IReactiveCommand _assignCommand;
-    private IObservable<bool> _employeeValidation;
+    private readonly IObservable<bool> _employeeValidation;
     private readonly IClientService _clientService;
     private readonly IEmployeeService _employeeService;
+    
     public AssignClientManagerViewModel(Domain.Models.Client client, IClientService clientService, IEmployeeService employeeService) : base(new ViewModelActivator())
     {
         _clientService = clientService;
@@ -27,7 +29,7 @@ public class AssignClientManagerViewModel : ViewModelBase
 
     public ObservableCollection<Employee> Employees
     {
-        get => _employees ?? (_employees = new ObservableCollection<Employee>());
+        get => _employees ??= new ObservableCollection<Employee>();
         set => this.RaiseAndSetIfChanged(ref _employees, value);
     }
 
@@ -37,13 +39,14 @@ public class AssignClientManagerViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _employee, value);
     }
 
+    [UsedImplicitly]
     public Domain.Models.Client Client
     {
         get => _client;
         set => this.RaiseAndSetIfChanged(ref _client, value);
     }
 
-    public IReactiveCommand AssignCommand => _assignCommand ?? (_assignCommand = ReactiveCommand.CreateFromTask(async () =>
+    public IReactiveCommand AssignCommand => _assignCommand ??= ReactiveCommand.CreateFromTask(async () =>
     {
         if (Employee == null)
         {
@@ -53,7 +56,7 @@ public class AssignClientManagerViewModel : ViewModelBase
         var employee = await _employeeService.GetById(Employee.Id);
 
         await _clientService.AssignManager(client, employee);
-    }, canExecute: _employeeValidation));
+    }, canExecute: _employeeValidation);
 
     protected override async void HandleActivation()
     {

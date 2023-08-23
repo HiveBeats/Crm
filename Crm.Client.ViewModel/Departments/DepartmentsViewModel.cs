@@ -14,8 +14,11 @@ using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using JetBrains.Annotations;
 
 namespace Crm.Client.ViewModel.Departments;
+
+[UsedImplicitly]
 public class DepartmentsViewModel : ItemsViewModel<Department>, IPageViewModel
 {
     public DepartmentsViewModel() : base(new ViewModelActivator())

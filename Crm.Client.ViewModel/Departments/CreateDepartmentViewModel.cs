@@ -16,8 +16,9 @@ public class CreateDepartmentViewModel : ViewModelBase
     private readonly IDepartmentsService _departmentsService;
     private string _name;
     private Department _parent;
-    private IObservable<bool> _nameValidation;
+    private readonly IObservable<bool> _nameValidation;
     private ReactiveCommand<Unit, Department?> _createCommand;
+    
     public CreateDepartmentViewModel(IDepartmentsService departmentsService, Department parent = null) : base(new ViewModelActivator())
     {
         _departmentsService = departmentsService;
@@ -38,10 +39,9 @@ public class CreateDepartmentViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _parent, value);
     }
 
-    public ReactiveCommand<Unit, Department> CreateCommand => _createCommand ?? (_createCommand = ReactiveCommand.CreateFromTask(async () =>
-    {
-        return await _departmentsService.Create(Name, Parent);
-    }, canExecute: _nameValidation));
+    public ReactiveCommand<Unit, Department> CreateCommand => _createCommand ??= 
+        ReactiveCommand.CreateFromTask(async () => await _departmentsService.Create(Name, Parent), 
+            canExecute: _nameValidation);
 
     public ReactiveCommand<Unit, Unit> CancelCommand { get; }
 }

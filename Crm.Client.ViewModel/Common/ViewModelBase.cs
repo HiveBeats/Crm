@@ -12,7 +12,8 @@ namespace Crm.Client.ViewModel.Common;
 public class ViewModelBase : ReactiveObject, IActivatableViewModel
 {
     private readonly IDbContextFactory _dbContextFactory;
-    public ViewModelBase(ViewModelActivator activator)
+
+    protected ViewModelBase(ViewModelActivator activator)
     {
         _dbContextFactory = Locator.Current.GetService<IDbContextFactory>();
         Activator = activator;

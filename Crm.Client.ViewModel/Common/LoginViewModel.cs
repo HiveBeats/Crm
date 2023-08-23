@@ -12,6 +12,7 @@ public class LoginViewModel : ViewModelBase, IPageViewModel
 
 	private readonly IAuthConfiguration _auth;
 	private readonly IAuthService _authService;
+	
 	public LoginViewModel() : base(new ViewModelActivator())
 	{
 		_auth = Locator.Current.GetService<IAuthConfiguration>();

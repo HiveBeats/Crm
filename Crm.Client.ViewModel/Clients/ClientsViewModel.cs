@@ -8,8 +8,11 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using JetBrains.Annotations;
 
 namespace Crm.Client.ViewModel.Clients;
+
+[UsedImplicitly]
 public class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IPageViewModel
 {
     public ClientsViewModel() : base(new ViewModelActivator())

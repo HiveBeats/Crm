@@ -10,8 +10,8 @@ public class CreateClientOrderViewModel : ViewModelBase
 	private string _name;
 	private string _description;
 	private ReactiveCommand<Unit, Unit> _createCommand;
-	private IObservable<bool> _nameValidation;
-	private Crm.Domain.Models.Client _client;
+	private readonly IObservable<bool> _nameValidation;
+	private readonly Crm.Domain.Models.Client _client;
 	private readonly IClientOrdersService _clientOrdersService;
 	public CreateClientOrderViewModel(Crm.Domain.Models.Client client, IClientOrdersService clientOrdersService) : base(new ReactiveUI.ViewModelActivator())
 	{
@@ -35,10 +35,10 @@ public class CreateClientOrderViewModel : ViewModelBase
 		set => this.RaiseAndSetIfChanged(ref _description, value);
 	}
 
-	public ReactiveCommand<Unit, Unit> CreateCommand => _createCommand ?? (_createCommand = ReactiveCommand.CreateFromTask(async () =>
+	public ReactiveCommand<Unit, Unit> CreateCommand => _createCommand ??= ReactiveCommand.CreateFromTask(async () =>
 	{
 		await _clientOrdersService.Create(_client, Name, Description);
-	}, canExecute: _nameValidation));
+	}, canExecute: _nameValidation);
 
 	public ReactiveCommand<Unit, Unit> CancelCommand { get; }
 }
