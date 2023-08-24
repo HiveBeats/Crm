@@ -3,12 +3,20 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.DependencyInjection;
+
 using Crm.Client.Avalonia.ViewModels;
 using Crm.Client.Avalonia.Views;
+using Crm.Server.Infrastructure.Database;
 
 namespace Crm.Client.Avalonia;
 public partial class App : Applicat
 {
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddCrmServerService();
+    }
+    
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
