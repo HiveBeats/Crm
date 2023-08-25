@@ -14,7 +14,7 @@ public partial class App : Applicat
 {
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddCrmServerService();
+        services.AddDatabaseService();
     }
     
     public override void Initialize()
