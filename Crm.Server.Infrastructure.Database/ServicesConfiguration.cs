@@ -4,7 +4,7 @@ namespace Crm.Server.Infrastructure.Database;
 
 public static class ServicesConfiguration
 {
-    public static void AddCrmServerService(this IServiceCollection services)
+    public static void AddDatabaseService(this IServiceCollection services)
     {
         services.AddTransient<CrmDbContext>();
     }

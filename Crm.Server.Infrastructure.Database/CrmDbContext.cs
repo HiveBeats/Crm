@@ -31,10 +31,6 @@ public class CrmDbContext : DbContext, IDesignTimeDbContextFactory<CrmDbContext>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CrmDbContext).Assembly);
-        modelBuilder.Entity<Client>().HasData(
-            new Client("Irina Victorovna", "+79455684645"),
-            new Client("Alexander Ivanovich", "ivanovich.a@mail.ru")
-        );
     }
 
     public CrmDbContext CreateDbContext(string[] args)
