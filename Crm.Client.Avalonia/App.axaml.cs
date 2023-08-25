@@ -21,7 +21,7 @@ public partial class App : Applicat
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton(Configuration);
-        services.AddDatabaseService(Configuration.GetConnectionString("ConnectionString"));
+        services.AddDatabaseService(Configuration.GetConnectionString("NpgConnection"));
     }
     
     public override void Initialize()
