@@ -11,21 +11,19 @@ namespace Crm.Server.Infrastructure.Database;
 public class CrmDbContext : DbContext, IDesignTimeDbContextFactory<CrmDbContext>
 {
     private string _connectionString;
+
     public CrmDbContext(DbContextOptions options) : base(options){}
 
     public CrmDbContext(string connectionString) : base()
     {
-        _connectionString = connectionString ?? "Host=localhost;Username=john;Password=passw0rd;Database=todosdb;";
+        _connectionString = connectionString;
     }
 
-    public CrmDbContext(): base()
-    {
-        _connectionString = "Host=localhost;Username=john;Password=passw0rd;Database=todosdb;";
-    }
+    public CrmDbContext(): base() {}
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(_connectionString ?? "Host=localhost;Username=john;Password=passw0rd;Database=todosdb;", sqlOpt => sqlOpt.CommandTimeout(500));
+        optionsBuilder.UseNpgsql(_connectionString, sqlOpt => sqlOpt.CommandTimeout(500));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -36,7 +34,7 @@ public class CrmDbContext : DbContext, IDesignTimeDbContextFactory<CrmDbContext>
     public CrmDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<CrmDbContext>();
-        optionsBuilder.UseNpgsql("Host=localhost;Username=john;Password=passw0rd;Database=todosdb;");
+        optionsBuilder.UseNpgsql(_connectionString);
 
         return new CrmDbContext(optionsBuilder.Options);
     }
