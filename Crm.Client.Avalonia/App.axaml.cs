@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using Crm.Client.Application;
 using Microsoft.Extensions.DependencyInjection;
 
 using Crm.Client.Avalonia.ViewModels;
@@ -24,6 +25,7 @@ public partial class App : Applicat
         services.AddSingleton(Configuration);
         services.AddDatabaseService(Configuration.GetConnectionString("NpgConnection"));
         services.AddViewModelServices();
+        services.AddApplicationService();
     }
     
     public override void Initialize()
