@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Crm.Client.Avalonia.ViewModels;
 using Crm.Client.Avalonia.Views;
+using Crm.Client.ViewModel;
 using Crm.Server.Infrastructure.Database;
 using Microsoft.Extensions.Configuration;
 
@@ -22,6 +23,7 @@ public partial class App : Applicat
     {
         services.AddSingleton(Configuration);
         services.AddDatabaseService(Configuration.GetConnectionString("NpgConnection"));
+        services.AddViewModelServices();
     }
     
     public override void Initialize()
