@@ -17,7 +17,6 @@ public class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IPageViewM
 {
     public ClientsViewModel(IClientService clientService) : base(new ViewModelActivator())
     {
-        // ItemsService = Locator.Current.GetService<IClientService>();
         ItemsService = clientService;
         
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
