@@ -20,6 +20,7 @@ public partial class App : Applicat
         .AddJsonFile("appsettings.json", true, false)
         .Build();
     
+    public static ServiceProvider ServiceProvider { get; set; }
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton(Configuration);
@@ -35,6 +36,10 @@ public partial class App : Applicat
 
     public override void OnFrameworkInitializationCompleted()
     {
+        var servicesCollection = new ServiceCollection();
+        ConfigureServices(servicesCollection);
+        ServiceProvider = servicesCollection.BuildServiceProvider();
+        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Line below is needed to remove Avalonia data validation.

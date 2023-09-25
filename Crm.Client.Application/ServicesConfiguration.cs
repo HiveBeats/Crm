@@ -11,12 +11,12 @@ public static class ServicesConfiguration
 {
     public static void AddApplicationService(this IServiceCollection service)
     {
-        service.AddTransient<ClientOrdersService>();
-        service.AddTransient<ClientService>();
-        service.AddTransient<DepartmentsService>();
-        service.AddTransient<EmployeeClientsService>();
-        service.AddTransient<EmployeeService>();
-        service.AddTransient<OrdersService>();
-        service.AddTransient<ResourceService>();
+        service.AddTransient<IClientOrdersService, ClientOrdersService>();
+        service.AddTransient<IClientService, ClientService>();
+        service.AddTransient<IDepartmentsService, DepartmentsService>();
+        service.AddTransient<IEmployeeClientsService, EmployeeClientsService>();
+        service.AddTransient<IEmployeeService, EmployeeService>();
+        service.AddTransient<IOrdersService, OrdersService>();
+        service.AddTransient<IResourceService, ResourceService>();
     }
 }

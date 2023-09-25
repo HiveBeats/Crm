@@ -17,7 +17,8 @@ public class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IPageViewM
 {
     public ClientsViewModel() : base(new ViewModelActivator())
     {
-        ItemsService = Locator.Current.GetService<IClientService>();
+        // ItemsService = Locator.Current.GetService<IClientService>();
+        
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
 
         ShowCreateOrderDialog = new Interaction<CreateClientOrderViewModel, Unit>();
