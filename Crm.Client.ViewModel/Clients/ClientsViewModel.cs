@@ -15,9 +15,10 @@ namespace Crm.Client.ViewModel.Clients;
 [UsedImplicitly]
 public class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IPageViewModel
 {
-    public ClientsViewModel() : base(new ViewModelActivator())
+    public ClientsViewModel(IClientService clientService) : base(new ViewModelActivator())
     {
         // ItemsService = Locator.Current.GetService<IClientService>();
+        ItemsService = clientService;
         
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
 
