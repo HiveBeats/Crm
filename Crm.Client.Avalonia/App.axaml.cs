@@ -24,9 +24,9 @@ public partial class App : Applicat
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton(Configuration);
-        services.AddDatabaseServices(Configuration.GetConnectionString("NpgConnection"));
+        services.AddDatabase(Configuration.GetConnectionString("NpgConnection"));
         services.AddViewModelServices();
-        services.AddApplicationService();
+        services.AddApplicationServices();
     }
     
     public override void Initialize()

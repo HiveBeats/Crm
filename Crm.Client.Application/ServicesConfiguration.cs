@@ -9,7 +9,7 @@ namespace Crm.Client.Application;
 
 public static class ServicesConfiguration
 {
-    public static void AddApplicationService(this IServiceCollection service)
+    public static void AddApplicationServices(this IServiceCollection service)
     {
         service.AddTransient<IClientOrdersService, ClientOrdersService>();
         service.AddTransient<IClientService, ClientService>();
