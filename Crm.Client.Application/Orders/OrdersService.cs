@@ -1,25 +1,24 @@
 ﻿using Crm.Domain.Models;
-using Crm.Infrastructure.Database;
+using Crm.Server.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Crm.Client.Application.Orders;
 public interface IOrdersService : IItemsService<Order>
 {
 }
-public class OrdersService :ServiceBase, IOrdersService
+public class OrdersService: IOrdersService
 {
-    public OrdersService(IDbContextFactory factory): base(factory)
+    private readonly CrmDbContext _db;
+    public OrdersService(CrmDbContext db)
     {
-        
+        _db = db;
     }
 
     public async Task<IReadOnlyCollection<Order>> GetAll()
     {
         IReadOnlyCollection<Order> result;
-        using (var db = GetDb())
-        {
-            result = await db.Orders.AsNoTracking().ToListAsync();
-        }
+        result = await _db.Orders.AsNoTracking().ToListAsync();
+        
         return result;
     }
 }

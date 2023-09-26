@@ -1,5 +1,5 @@
 ﻿using Crm.Domain.Models;
-using Crm.Infrastructure.Database;
+using Crm.Server.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Crm.Client.Application.Departments;
@@ -7,34 +7,32 @@ public interface IDepartmentsService:IItemsService<Department>
 {
     Task<Department> Create(string name, Department parent = null);
 }
-public class DepartmentsService : ServiceBase, IDepartmentsService
+public class DepartmentsService : IDepartmentsService
 {
-    public DepartmentsService(IDbContextFactory dbContextFactory) : base(dbContextFactory)
+    private readonly CrmDbContext _db;
+    public DepartmentsService(CrmDbContext db)
     {
+        _db = db;
     }
 
     public async Task<IReadOnlyCollection<Department>> GetAll()
     {
         IReadOnlyCollection<Department> result;
-        using (var db = GetDb())
-        {
-            result = await db.Departments.ToListAsync();
+        result = await _db.Departments.ToListAsync();
             //todo: https://stackoverflow.com/questions/57873786/ef-core-load-tree-list
-        }
+        
         return result;
     }
 
     public async Task<Department> Create(string name, Department parent = null)
     {
         Department result;
-        using (var db = GetDb())
-        {
-            var department = new Department(name, parent);
-            db.Departments.Add(department);
-            await db.SaveChangesAsync();
+        var department = new Department(name, parent);
+        _db.Departments.Add(department);
+        await _db.SaveChangesAsync();
 
-            result = department;
-        }
+        result = department;
+        
 
         return result;
     }

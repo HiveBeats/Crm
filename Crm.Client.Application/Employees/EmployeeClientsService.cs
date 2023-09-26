@@ -1,5 +1,5 @@
 ﻿using Crm.Domain.Models;
-using Crm.Infrastructure.Database;
+using Crm.Server.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Crm.Client.Application.Employees;
@@ -7,23 +7,23 @@ public interface IEmployeeClientsService : IRelativeItemsService<Employee, Domai
 {
 
 }
-public class EmployeeClientsService : ServiceBase, IEmployeeClientsService
+public class EmployeeClientsService : IEmployeeClientsService
 {
-    public EmployeeClientsService(IDbContextFactory factory): base(factory)
+    private readonly CrmDbContext _db;
+    public EmployeeClientsService(CrmDbContext db)
     {
+        _db = db;
     }
     public async Task<IReadOnlyCollection<Domain.Models.Client>> GetAll(Employee item)
     {
         IReadOnlyCollection<Domain.Models.Client> result;
-        using (var db = GetDb())
-        {
-            result = await db.ClientManagers
+        result = await _db.ClientManagers
                 .Include(x => x.Client)
                 .Where(x => x.EmployeeId == item.Id)
                 .AsNoTracking()
                 .Select(x => x.Client)
                 .ToListAsync();
-        }
+        
         return result;
     }
 }

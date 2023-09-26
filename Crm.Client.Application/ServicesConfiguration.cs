@@ -1,3 +1,4 @@
+using Crm.Client.Application.Authentication;
 using Crm.Client.Application.Clients;
 using Crm.Client.Application.Departments;
 using Crm.Client.Application.Employees;
@@ -11,6 +12,7 @@ public static class ServicesConfiguration
 {
     public static void AddApplicationServices(this IServiceCollection service)
     {
+        service.AddTransient<IAuthService, AuthService>();
         service.AddTransient<IClientOrdersService, ClientOrdersService>();
         service.AddTransient<IClientService, ClientService>();
         service.AddTransient<IDepartmentsService, DepartmentsService>();

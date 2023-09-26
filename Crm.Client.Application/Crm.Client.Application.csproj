@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Crm.Domain\Crm.Domain.csproj" />
-    <ProjectReference Include="..\Crm.Infrastructure.Database\Crm.Infrastructure.Database.csproj" />
+    <ProjectReference Include="..\Crm.Server.Infrastructure.Database\Crm.Server.Infrastructure.Database.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,6 +9,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Crm.Client.ViewModel.Clients;
 
@@ -35,7 +36,7 @@ public class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IPageViewM
 
     private async Task CreateClientOrderAsync()
     {
-        var vm = new CreateClientOrderViewModel(CurrentItem, Locator.Current.GetService<IClientOrdersService>());
+        var vm = new CreateClientOrderViewModel(CurrentItem, MainWindowViewModel.ServiceProvider.GetRequiredService<IClientOrdersService>());
         await ShowCreateOrderDialog.Handle(vm);
         OnMasterChanged();
     }

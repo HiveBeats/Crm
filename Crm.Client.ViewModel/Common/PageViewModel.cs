@@ -14,7 +14,7 @@ public class PageViewModel<T, TDetail>: ViewModelBase, IPageViewModel
 	{
 		//todo:
 		//this.WhenAny(x => x.MasterViewModel.CurrentItem) ...
-		MasterViewModel = System.Activator.CreateInstance<T>();
+		MasterViewModel = (T)MainWindowViewModel.ServiceProvider.GetService(typeof(T));
 	}
 
 	[UsedImplicitly]

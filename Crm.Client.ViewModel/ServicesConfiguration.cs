@@ -1,23 +1,27 @@
+using System;
+using System.Linq;
 using Crm.Client.ViewModel.Clients;
+using Crm.Client.ViewModel.Common;
 using Crm.Client.ViewModel.Departments;
 using Crm.Client.ViewModel.Employees;
 using Microsoft.Extensions.DependencyInjection;
+using Splat;
 
 namespace Crm.Client.ViewModel;
 
 public static class ServicesConfiguration
 {
-    public static void AddViewModelServices(this IServiceCollection service)
+    public static void AddViewModels(this IServiceCollection service)
     {
-        service.AddTransient<AssignClientManagerViewModel>();
-        service.AddTransient<CreateClientOrderViewModel>();
-        service.AddTransient<CreateClientViewModel>();
-        service.AddTransient<ClientOrdersViewModel>();
-        service.AddTransient<ClientsPageViewModel>();
-        service.AddTransient<ClientsViewModel>();
-        service.AddTransient<CreateDepartmentViewModel>();
-        service.AddTransient<DepartmentsViewModel>();
-        service.AddTransient<EmployeeClientsViewModel>();
-        service.AddTransient<EmployeesViewModel>();
+        var assembly = typeof(ViewModelBase).Assembly;
+
+        var viewModels = (from assemblyType in assembly.GetExportedTypes()
+            where assemblyType.GetInterface(nameof(IPageViewModel)) != null
+            select assemblyType).ToArray();
+
+        foreach (var vm in viewModels)
+        {
+            service.AddTransient(vm);
+        }
     }
 }

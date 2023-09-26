@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Crm.Client.Avalonia.ViewModels;
 using Crm.Client.Avalonia.Views;
 using Crm.Client.ViewModel;
+using Crm.Client.ViewModel.Common;
 using Crm.Server.Infrastructure.Database;
 using Microsoft.Extensions.Configuration;
 
@@ -20,12 +21,11 @@ public partial class App : Applicat
         .AddJsonFile("appsettings.json", true, false)
         .Build();
     
-    public static ServiceProvider ServiceProvider { get; set; }
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton(Configuration);
         services.AddDatabase(Configuration.GetConnectionString("NpgConnection"));
-        services.AddViewModelServices();
+        services.AddViewModels();
         services.AddApplicationServices();
     }
     
@@ -38,7 +38,7 @@ public partial class App : Applicat
     {
         var servicesCollection = new ServiceCollection();
         ConfigureServices(servicesCollection);
-        ServiceProvider = servicesCollection.BuildServiceProvider();
+        var serviceProvider = servicesCollection.BuildServiceProvider();
         
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -47,7 +47,7 @@ public partial class App : Applicat
             ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = new MainWindowViewModel(serviceProvider),
             };
         }
 
