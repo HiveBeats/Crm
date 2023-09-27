@@ -17,13 +17,11 @@ public class NavigationViewModel:ViewModelBase, IPageViewModel
 	private readonly ResourcesViewModel _resourcesViewModel;
 	private readonly DepartmentsViewModel _departmentsViewModel;
 	private readonly ClientsPageViewModel _clientsViewModel;
-	private readonly ItemAttrsViewModel _attrsViewModel;
 	public NavigationViewModel(): base(new ReactiveUI.ViewModelActivator())
 	{
 		_resourcesViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<ResourcesViewModel>();
 		_departmentsViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<DepartmentsViewModel>();
 		_clientsViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<ClientsPageViewModel>();
-		_attrsViewModel = new ItemAttrsViewModel();
 		CurrentContext = _clientsViewModel;
 	}
 
@@ -41,7 +39,6 @@ public class NavigationViewModel:ViewModelBase, IPageViewModel
 		{
 			"Client" => _clientsViewModel,
 			"Resource" => _resourcesViewModel,
-			"Order" => _attrsViewModel,
 			"Employee" => _departmentsViewModel,
 			_ => CurrentContext
 		};
