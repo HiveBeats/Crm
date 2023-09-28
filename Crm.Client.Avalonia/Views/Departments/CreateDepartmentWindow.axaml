@@ -6,8 +6,8 @@
              x:Class="Crm.Client.Avalonia.Views.Departments.CreateDepartmentWindow"
 		Width="480" Height="640">
 	<StackPanel VerticalAlignment="Center"
-					  HorizontalAlignment="Center"
-					  Width="300">
+	            HorizontalAlignment="Center"
+				Width="300">
 		<TextBlock Text="Название:" Margin="0 5" />
 		<TextBox Watermark="Название подразделения" Text="{Binding Name, Mode=TwoWay}" />		
 		

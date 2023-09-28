@@ -12,6 +12,8 @@ using Crm.Client.ViewModel;
 using Crm.Client.ViewModel.Common;
 using Crm.Server.Infrastructure.Database;
 using Microsoft.Extensions.Configuration;
+using HanumanInstitute.MvvmDialogs;
+using HanumanInstitute.MvvmDialogs.Avalonia;
 
 namespace Crm.Client.Avalonia;
 public partial class App : Applicat
@@ -28,6 +30,7 @@ public partial class App : Applicat
         services.AddDatabase(Configuration.GetConnectionString("NpgConnection"));
         services.AddViewModels();
         services.AddApplicationServices();
+        services.AddSingleton<IDialogService, DialogService>();
     }
     
     public override void Initialize()
