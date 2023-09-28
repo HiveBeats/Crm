@@ -19,6 +19,7 @@ public partial class App : Applicat
     public IConfiguration Configuration { get; set; } = 
         new ConfigurationBuilder()
         .AddJsonFile("appsettings.json", true, false)
+        .AddJsonFile("appsettings.dev.json", true, false)
         .Build();
     
     public void ConfigureServices(IServiceCollection services)
