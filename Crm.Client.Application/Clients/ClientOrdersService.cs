@@ -1,5 +1,5 @@
 ﻿using Crm.Domain.Models;
-using Crm.Infrastructure.Database;
+using Crm.Server.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Crm.Client.Application.Clients;
@@ -8,10 +8,13 @@ public interface IClientOrdersService : IRelativeItemsService<Domain.Models.Clie
     Task<Guid> Create(Crm.Domain.Models.Client client, string name, string description);
     Task<IReadOnlyCollection<Order>> GetClientOrders(Crm.Domain.Models.Client client);
 }
-public class ClientOrdersService: ServiceBase, IClientOrdersService
+public class ClientOrdersService: IClientOrdersService
 {
-    public ClientOrdersService(IDbContextFactory dbContextFactory): base(dbContextFactory)
-    {    
+    private readonly CrmDbContext _db;
+    
+    public ClientOrdersService(CrmDbContext db)
+    {
+        _db = db;
     }
 
     public async Task<Guid> Create(Domain.Models.Client client, string name, string description)
@@ -22,14 +25,13 @@ public class ClientOrdersService: ServiceBase, IClientOrdersService
         }
         
         Guid result = Guid.Empty;
-        using(var db = GetDb())
-        {
-            var retrievedClient = await db.Clients.FirstAsync(c => c.Id == client.Id);
-            var order = new Order(retrievedClient, name, description);
-            db.Orders.Add(order);
-            await db.SaveChangesAsync();
-            result = order.Id;
-        }
+        
+        var retrievedClient = await _db.Clients.FirstAsync(c => c.Id == client.Id);
+        var order = new Order(retrievedClient, name, description);
+        _db.Orders.Add(order);
+        await _db.SaveChangesAsync();
+        result = order.Id;
+        
 
         return result;
     }
@@ -39,14 +41,12 @@ public class ClientOrdersService: ServiceBase, IClientOrdersService
     public async Task<IReadOnlyCollection<Order>> GetClientOrders(Crm.Domain.Models.Client client)
     {
         IReadOnlyCollection<Order> orders;
-        using (var db = GetDb())
-        {
-            orders = await db.Orders
-                .Where(x => x.ClientId == client.Id)
-                .AsNoTracking()
-                .ToListAsync();
-        }
-
+        
+        orders = await _db.Orders
+            .Where(x => x.ClientId == client.Id)
+            .AsNoTracking()
+            .ToListAsync();
+        
         return orders;
     }
 }

@@ -2,6 +2,7 @@
 using ReactiveUI;
 using Splat;
 using System.Windows.Input;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Crm.Client.ViewModel.Common;
 
@@ -13,10 +14,11 @@ public class LoginViewModel : ViewModelBase, IPageViewModel
 	private readonly IAuthConfiguration _auth;
 	private readonly IAuthService _authService;
 	
-	public LoginViewModel() : base(new ViewModelActivator())
+	public LoginViewModel(IAuthService service) : base(new ViewModelActivator())
 	{
-		_auth = Locator.Current.GetService<IAuthConfiguration>();
-		_authService = Locator.Current.GetService<IAuthService>();
+		//todo: configure options
+		_auth = null;
+		_authService = service;
 
 		LoginCommand = ReactiveCommand.CreateFromTask(async () =>
 		{

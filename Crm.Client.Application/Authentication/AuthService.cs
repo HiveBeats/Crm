@@ -1,6 +1,6 @@
 ﻿using Crm.Domain.Models;
 using Crm.Domain.Services.Password;
-using Crm.Infrastructure.Database;
+using Crm.Server.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using ResultMonad;
 
@@ -15,12 +15,14 @@ public interface IAuthService
     Task<Result<User>> Login(string username, string password);
 }
 
-public class AuthService: ServiceBase, IAuthService
+public class AuthService: IAuthService
 {
+    private readonly CrmDbContext _db;
     private const string FileName = "auth.json";
-    public AuthService(IDbContextFactory dbContextFactory): base(dbContextFactory)
+    
+    public AuthService(CrmDbContext db)
     {
-        
+        _db = db;
     }
 
 
@@ -33,17 +35,14 @@ public class AuthService: ServiceBase, IAuthService
             var auth = System.Text.Json.JsonSerializer.Deserialize<AuthDto>(fileText);
             if (auth != null)
             {
-                using (var db = GetDb())
+                var userId = Guid.Parse(auth.Id);
+                var user = await _db.Users
+                    .Include(x => x.Employee)
+                    .FirstOrDefaultAsync(x => x.Id == userId);
+                if (user != null)
                 {
-                    var userId = Guid.Parse(auth.Id);
-                    var user = await db.Users
-                        .Include(x => x.Employee)
-                        .FirstOrDefaultAsync(x => x.Id == userId);
-                    if (user != null)
-                    {
-                        return Result.Ok(user);
-                    }
-                }                
+                    return Result.Ok(user);
+                }             
             }
             return Result.Fail<User>();
         }
@@ -53,21 +52,18 @@ public class AuthService: ServiceBase, IAuthService
 
     public async Task<Result<User>> Login(string username, string password)
     {
-        using (var db = GetDb())
-        {
-            var user = await db.Users
+        var user = await _db.Users
                 .Include(x => x.Employee)
                 .FirstOrDefaultAsync(x => x.Email == username);
 
-            if (user != null && PasswordHasher.VerifyPassword(password, user.HashedPassword, user.Salt))
-            {
-                var authDto = new AuthDto() { Id = user.Id.ToString() };
-                await File.WriteAllTextAsync(FileName, System.Text.Json.JsonSerializer.Serialize<AuthDto>(authDto));
+        if (user != null && PasswordHasher.VerifyPassword(password, user.HashedPassword, user.Salt))
+        {
+            var authDto = new AuthDto() { Id = user.Id.ToString() };
+            await File.WriteAllTextAsync(FileName, System.Text.Json.JsonSerializer.Serialize<AuthDto>(authDto));
 
-                return Result.Ok(user);
-            }
-        }        
-
+            return Result.Ok(user);
+        }
+        
         return Result.Fail<User>();
     }
 }

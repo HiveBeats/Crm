@@ -8,9 +8,9 @@ using System.Reactive.Concurrency;
 namespace Crm.Client.ViewModel.Employees;
 public class EmployeesViewModel : ItemsViewModel<Employee>, IPageViewModel
 {
-	public EmployeesViewModel() : base(new ReactiveUI.ViewModelActivator())
+	public EmployeesViewModel(IEmployeeService employeeService) : base(new ReactiveUI.ViewModelActivator())
 	{
-		ItemsService = Locator.Current.GetService<IEmployeeService>();
+		ItemsService = employeeService;
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 }

@@ -1,5 +1,4 @@
-﻿using Crm.Infrastructure.Database;
-using ReactiveUI;
+﻿using ReactiveUI;
 using Splat;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
@@ -7,15 +6,18 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Crm.Client.ViewModel.Common;
 public class ViewModelBase : ReactiveObject, IActivatableViewModel
 {
-    private readonly IDbContextFactory _dbContextFactory;
-
+    protected ViewModelBase()
+    {
+        
+    }
+    
     protected ViewModelBase(ViewModelActivator activator)
     {
-        _dbContextFactory = Locator.Current.GetService<IDbContextFactory>();
         Activator = activator;
         this.WhenActivated(disposables =>
         {

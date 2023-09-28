@@ -9,8 +9,10 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
-    <Folder Include="Views\Common\" />
     <None Remove=".gitignore" />
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -41,5 +43,6 @@
     <Compile Update="Views\Departments\CreateDepartmentWindow.axaml.cs">
       <DependentUpon>CreateDepartmentWindow.axaml</DependentUpon>
     </Compile>
+    <Compile Remove="Views\Common\ItemAttrsView.axaml.cs" />
   </ItemGroup>
 </Project>

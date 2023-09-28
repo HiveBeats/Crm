@@ -3,10 +3,13 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using Crm.Client.Application;
 using Microsoft.Extensions.DependencyInjection;
 
 using Crm.Client.Avalonia.ViewModels;
 using Crm.Client.Avalonia.Views;
+using Crm.Client.ViewModel;
+using Crm.Client.ViewModel.Common;
 using Crm.Server.Infrastructure.Database;
 using Microsoft.Extensions.Configuration;
 
@@ -21,7 +24,9 @@ public partial class App : Applicat
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton(Configuration);
-        services.AddDatabaseService(Configuration.GetConnectionString("NpgConnection"));
+        services.AddDatabase(Configuration.GetConnectionString("NpgConnection"));
+        services.AddViewModels();
+        services.AddApplicationServices();
     }
     
     public override void Initialize()
@@ -31,6 +36,10 @@ public partial class App : Applicat
 
     public override void OnFrameworkInitializationCompleted()
     {
+        var servicesCollection = new ServiceCollection();
+        ConfigureServices(servicesCollection);
+        var serviceProvider = servicesCollection.BuildServiceProvider();
+        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Line below is needed to remove Avalonia data validation.
@@ -38,7 +47,7 @@ public partial class App : Applicat
             ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = new MainWindowViewModel(serviceProvider),
             };
         }
 

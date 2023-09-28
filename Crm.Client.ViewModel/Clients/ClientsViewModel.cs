@@ -9,15 +9,17 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Crm.Client.ViewModel.Clients;
 
 [UsedImplicitly]
 public class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IPageViewModel
 {
-    public ClientsViewModel() : base(new ViewModelActivator())
+    public ClientsViewModel(IClientService clientService) : base(new ViewModelActivator())
     {
-        ItemsService = Locator.Current.GetService<IClientService>();
+        ItemsService = clientService;
+        
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
 
         ShowCreateOrderDialog = new Interaction<CreateClientOrderViewModel, Unit>();
@@ -34,7 +36,7 @@ public class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IPageViewM
 
     private async Task CreateClientOrderAsync()
     {
-        var vm = new CreateClientOrderViewModel(CurrentItem, Locator.Current.GetService<IClientOrdersService>());
+        var vm = new CreateClientOrderViewModel(CurrentItem, MainWindowViewModel.ServiceProvider.GetRequiredService<IClientOrdersService>());
         await ShowCreateOrderDialog.Handle(vm);
         OnMasterChanged();
     }

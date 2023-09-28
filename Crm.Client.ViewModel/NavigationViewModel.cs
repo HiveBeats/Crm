@@ -6,6 +6,7 @@ using ReactiveUI;
 using Splat;
 using System.Reactive;
 using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Crm.Client.ViewModel;
 
@@ -16,13 +17,11 @@ public class NavigationViewModel:ViewModelBase, IPageViewModel
 	private readonly ResourcesViewModel _resourcesViewModel;
 	private readonly DepartmentsViewModel _departmentsViewModel;
 	private readonly ClientsPageViewModel _clientsViewModel;
-
 	public NavigationViewModel(): base(new ReactiveUI.ViewModelActivator())
 	{
-		_resourcesViewModel = Locator.Current.GetService<ResourcesViewModel>();
-		_departmentsViewModel = Locator.Current.GetService<DepartmentsViewModel>();
-		_clientsViewModel = Locator.Current.GetService<ClientsPageViewModel>();
-
+		_resourcesViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<ResourcesViewModel>();
+		_departmentsViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<DepartmentsViewModel>();
+		_clientsViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<ClientsPageViewModel>();
 		CurrentContext = _clientsViewModel;
 	}
 

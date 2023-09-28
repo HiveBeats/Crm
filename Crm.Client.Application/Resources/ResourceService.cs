@@ -1,7 +1,7 @@
 ﻿using Crm.Domain.Models;
-using Crm.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Crm.Server.Infrastructure.Database;
 
 namespace Crm.Client.Application.Resources;
 
@@ -9,25 +9,24 @@ public interface IResourceService:IItemsService<Resource>
 {
 	Task<Guid> Create(string name, decimal quantity);
 }
-public class ResourceService : ServiceBase, IResourceService
+public class ResourceService : IResourceService
 {
-	public ResourceService(IDbContextFactory factory): base(factory)
+	private readonly CrmDbContext _db;
+	public ResourceService(CrmDbContext db)
 	{
-		
+		_db = db;
 	}
 
 	public async Task<Guid> Create(string name, decimal quantity)
 	{
 		Guid id = Guid.NewGuid();
-		using (var db = GetDb())
-		{
-            var resource = new Crm.Domain.Models.Resource(name, quantity);
+		var resource = new Crm.Domain.Models.Resource(name, quantity);
 
-            db.Resources.Add(resource);
-            await db.SaveChangesAsync();
+        _db.Resources.Add(resource);
+        await _db.SaveChangesAsync();
 
-            id = resource.Id;
-        }
+        id = resource.Id;
+        
 		
 
 		return id;
@@ -36,10 +35,7 @@ public class ResourceService : ServiceBase, IResourceService
 	public async Task<IReadOnlyCollection<Domain.Models.Resource>> GetAll()
 	{
 		IReadOnlyCollection<Domain.Models.Resource> result;
-		using (var db = GetDb())
-		{
-			result = await db.Resources.AsNoTracking().ToListAsync();
-        }
+		result = await _db.Resources.AsNoTracking().ToListAsync();
 		return result;
 	}
 }
