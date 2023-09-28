@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 .idea/
+Crm.Client.Avalonia/appsettings.dev.json
