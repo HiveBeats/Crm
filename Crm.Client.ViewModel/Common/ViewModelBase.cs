@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using System.ComponentModel;
+using ReactiveUI;
 using Splat;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Crm.Client.ViewModel.Common;
-public class ViewModelBase : ReactiveObject, IActivatableViewModel
+public class ViewModelBase : ReactiveObject, IActivatableViewModel, INotifyPropertyChanged
 {
     protected ViewModelBase()
     {

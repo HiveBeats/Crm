@@ -13,7 +13,5 @@ public partial class CreateDepartmentWindow : ReactiveWindow<CreateDepartmentVie
     public CreateDepartmentWindow()
     {
         InitializeComponent();
-        this.WhenActivated(d => d(ViewModel!.CreateCommand.Subscribe(_ => Close())));
-        this.WhenActivated(d => d(ViewModel!.CancelCommand.Subscribe(_ => Close())));
     }
 }

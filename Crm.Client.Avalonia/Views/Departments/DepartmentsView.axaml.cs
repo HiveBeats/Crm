@@ -19,15 +19,5 @@ public partial class DepartmentsView : ReactiveUserControl<DepartmentsViewModel>
     public DepartmentsView()
     {
         InitializeComponent();
-        this.WhenActivated(d => d(ViewModel!.ShowCreateDialog.RegisterHandler(DoShowDialogAsync)));
-    }
-
-    private async System.Threading.Tasks.Task DoShowDialogAsync(InteractionContext<CreateDepartmentViewModel, Department> interaction)
-    {
-        var dialog = new CreateDepartmentWindow();
-        dialog.DataContext = interaction.Input;
-        var parents = this.GetSelfAndVisualAncestors();
-        var result = await dialog.ShowDialog<Department>(parents.Last() as Window);
-        interaction.SetOutput(result);
     }
 }

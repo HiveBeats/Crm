@@ -9,9 +9,10 @@ using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
+using HanumanInstitute.MvvmDialogs;
 
 namespace Crm.Client.ViewModel.Departments;
-public class CreateDepartmentViewModel : ViewModelBase
+public class CreateDepartmentViewModel : ViewModelBase, IModalDialogViewModel
 {
     private readonly IDepartmentsService _departmentsService;
     private string _name;
@@ -38,10 +39,13 @@ public class CreateDepartmentViewModel : ViewModelBase
         get => _parent;
         set => this.RaiseAndSetIfChanged(ref _parent, value);
     }
+    
+    public Department Result { get; set; }
 
     public ReactiveCommand<Unit, Department> CreateCommand => _createCommand ??= 
-        ReactiveCommand.CreateFromTask(async () => await _departmentsService.Create(Name, Parent), 
+        ReactiveCommand.CreateFromTask(async () => Result = await _departmentsService.Create(Name, Parent), 
             canExecute: _nameValidation);
 
     public ReactiveCommand<Unit, Unit> CancelCommand { get; }
+    public bool? DialogResult => Result != null;
 }

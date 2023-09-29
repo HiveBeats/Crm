@@ -9,8 +9,13 @@ public class MainWindowViewModel : ViewModelBase
 {
     private Crm.Client.ViewModel.Common.ViewModelBase _currentViewModel;
     
-    public MainWindowViewModel(IServiceProvider sp): base(new ViewModelActivator())
+    public MainWindowViewModel(): base(new ViewModelActivator())
     {   
+        
+    }
+
+    public void Initialize(IServiceProvider sp)
+    {
         ServiceProvider = sp;
         CurrentViewModel = sp.GetRequiredService<NavigationViewModel>();
     }
