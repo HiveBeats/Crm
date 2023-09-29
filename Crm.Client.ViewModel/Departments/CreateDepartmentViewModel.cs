@@ -21,12 +21,13 @@ public partial class CreateDepartmentViewModel : ViewModelBase, IModalDialogView
     private readonly IObservable<bool> _nameValidation;
     private ReactiveCommand<Unit, Department?> _createCommand;
     
-    public CreateDepartmentViewModel(IDepartmentsService departmentsService, Department parent = null) : base(new ViewModelActivator())
+    public CreateDepartmentViewModel(
+        IDepartmentsService departmentsService,
+        Department parent = null) : base(new ViewModelActivator())
     {
         _departmentsService = departmentsService;
         _parent = parent;
         _nameValidation = this.WhenAnyValue(x => x.Name, name => !string.IsNullOrWhiteSpace(name));
-        // CancelCommand = ReactiveCommand.Create(() => { });
     }
 
     public string Name
@@ -46,8 +47,7 @@ public partial class CreateDepartmentViewModel : ViewModelBase, IModalDialogView
     public ReactiveCommand<Unit, Department> CreateCommand => _createCommand ??= 
         ReactiveCommand.CreateFromTask(async () => Result = await _departmentsService.Create(Name, Parent), 
             canExecute: _nameValidation);
-
-    // public ReactiveCommand<Unit, Unit> CancelCommand { get; }
+    
     public bool? DialogResult { get; set; }
 
 
