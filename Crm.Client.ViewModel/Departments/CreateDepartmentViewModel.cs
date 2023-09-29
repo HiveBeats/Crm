@@ -9,10 +9,11 @@ using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
 using HanumanInstitute.MvvmDialogs;
 
 namespace Crm.Client.ViewModel.Departments;
-public class CreateDepartmentViewModel : ViewModelBase, IModalDialogViewModel
+public partial class CreateDepartmentViewModel : ViewModelBase, IModalDialogViewModel, ICloseable
 {
     private readonly IDepartmentsService _departmentsService;
     private string _name;
@@ -25,7 +26,7 @@ public class CreateDepartmentViewModel : ViewModelBase, IModalDialogViewModel
         _departmentsService = departmentsService;
         _parent = parent;
         _nameValidation = this.WhenAnyValue(x => x.Name, name => !string.IsNullOrWhiteSpace(name));
-        CancelCommand = ReactiveCommand.Create(() => { });
+        // CancelCommand = ReactiveCommand.Create(() => { });
     }
 
     public string Name
@@ -46,6 +47,15 @@ public class CreateDepartmentViewModel : ViewModelBase, IModalDialogViewModel
         ReactiveCommand.CreateFromTask(async () => Result = await _departmentsService.Create(Name, Parent), 
             canExecute: _nameValidation);
 
-    public ReactiveCommand<Unit, Unit> CancelCommand { get; }
-    public bool? DialogResult => Result != null;
+    // public ReactiveCommand<Unit, Unit> CancelCommand { get; }
+    public bool? DialogResult { get; set; }
+
+
+    public event EventHandler RequestClose;
+    [RelayCommand]
+    public void Cancel()
+    {
+        DialogResult = false;
+        RequestClose?.Invoke(this, EventArgs.Empty);
+    }
 }
