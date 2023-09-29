@@ -33,13 +33,13 @@ public partial class CreateDepartmentViewModel : ViewModelBase, IModalDialogView
     public string Name
     {
         get => _name; 
-        set => this.RaiseAndSetIfChanged(ref _name, value);
+        set => SetProperty(ref _name, value);
     }
 
     public Department Parent
     {
         get => _parent;
-        set => this.RaiseAndSetIfChanged(ref _parent, value);
+        set => SetProperty(ref _parent, value);
     }
     
     public Department Result { get; set; }

@@ -22,13 +22,13 @@ public class CreateResourceViewModel : ViewModelBase
     public string Name
     {
         get => _name;
-        set => this.RaiseAndSetIfChanged(ref _name, value);
+        set => SetProperty(ref _name, value);
     }
 
     public decimal Quantity
     {
         get => _quantity;
-        set => this.RaiseAndSetIfChanged(ref _quantity, value);
+        set => SetProperty(ref _quantity, value);
     }
 
     public IReactiveCommand CreateCommand => _createCommand ??= ReactiveCommand.CreateFromTask(async () =>

@@ -26,8 +26,18 @@ public class LoginViewModel : ViewModelBase, IPageViewModel
 		});
 	}
 
-	public string UserName { get => _userName; set => this.RaiseAndSetIfChanged(ref _userName, value); }
-	public string Password { get => _password; set => this.RaiseAndSetIfChanged(ref _password, value); }
+	public string UserName
+	{
+		get => _userName; 
+		set => SetProperty(ref _userName, value);
+	}
+
+	public string Password
+	{
+		get => _password; 
+		set => SetProperty(ref _password, value);
+	}
+	
 	public ICommand LoginCommand { get; }
 
 	private async System.Threading.Tasks.Task Login()

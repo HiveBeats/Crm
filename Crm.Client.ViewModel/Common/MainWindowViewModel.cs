@@ -23,7 +23,7 @@ public class MainWindowViewModel : ViewModelBase
     public ViewModelBase CurrentViewModel 
     { 
         get => _currentViewModel; 
-        set => this.RaiseAndSetIfChanged(ref _currentViewModel, value); 
+        set => SetProperty(ref _currentViewModel, value); 
     }
     
     public static IServiceProvider ServiceProvider { get; private set; }

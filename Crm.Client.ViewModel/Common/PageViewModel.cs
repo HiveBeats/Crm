@@ -21,13 +21,13 @@ public class PageViewModel<T, TDetail>: ViewModelBase, IPageViewModel
 	public T MasterViewModel 
 	{ 
 		get => _masterViewModel; 
-		set => this.RaiseAndSetIfChanged(ref _masterViewModel, value); 
+		set => SetProperty(ref _masterViewModel, value); 
 	}
 
 	[UsedImplicitly]
 	public TDetail DetailViewModel 
 	{ 
 		get => _detailViewModel; 
-		set => this.RaiseAndSetIfChanged(ref _detailViewModel, value); 
+		set => SetProperty(ref _detailViewModel, value); 
 	}
 }

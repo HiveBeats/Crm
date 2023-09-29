@@ -7,15 +7,13 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Crm.Client.ViewModel.Common;
-public class ViewModelBase : ReactiveObject, IActivatableViewModel, INotifyPropertyChanged
+public class ViewModelBase : ObservableObject, IActivatableViewModel, INotifyPropertyChanged
 {
-    protected ViewModelBase()
-    {
-        
-    }
+    protected ViewModelBase(){}
     
     protected ViewModelBase(ViewModelActivator activator)
     {

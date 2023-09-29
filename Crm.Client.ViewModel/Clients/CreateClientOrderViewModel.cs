@@ -17,22 +17,20 @@ public class CreateClientOrderViewModel : ViewModelBase
 	{
 		_client = client;
 		_clientOrdersService = clientOrdersService;
-
 		_nameValidation = this.WhenAnyValue(x => x.Name, name => !string.IsNullOrWhiteSpace(name));
-
 		CancelCommand = ReactiveCommand.Create(() => { });
 	}
 
 	public string Name
 	{
 		get => _name;
-		set => this.RaiseAndSetIfChanged(ref _name, value);
+		set => SetProperty(ref _name, value);
 	}
 
 	public string Description
 	{
 		get => _description;
-		set => this.RaiseAndSetIfChanged(ref _description, value);
+		set => SetProperty(ref _description, value);
 	}
 
 	public ReactiveCommand<Unit, Unit> CreateCommand => _createCommand ??= ReactiveCommand.CreateFromTask(async () =>

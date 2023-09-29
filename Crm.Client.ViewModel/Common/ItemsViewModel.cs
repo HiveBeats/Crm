@@ -19,23 +19,20 @@ public class ItemsViewModelBase<T> : ViewModelBase, IItemViewModel
 	private ObservableCollection<T> _items;
 	private T _currentItem;
 
-	protected ItemsViewModelBase(ViewModelActivator activator) : base(activator)
-	{
-
-	}
+	protected ItemsViewModelBase(ViewModelActivator activator) : base(activator){}
 
 	[UsedImplicitly]
 	public ObservableCollection<T> Items
 	{
 		get => _items ??= new ObservableCollection<T>();
-		set => this.RaiseAndSetIfChanged(ref _items, value);
+		set => SetProperty(ref _items, value);
 	}
 
 	[UsedImplicitly]
 	public T CurrentItem
 	{
 		get => _currentItem;
-		set => this.RaiseAndSetIfChanged(ref _currentItem, value);
+		set => SetProperty(ref _currentItem, value);
 	}
 
 	IEntity IItemViewModel.CurrentItem => this.CurrentItem;
