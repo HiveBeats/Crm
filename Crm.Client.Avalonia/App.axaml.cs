@@ -33,8 +33,8 @@ public partial class App : Applicat
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<IDialogService>(new DialogService(
             new DialogManager(
-                new WindowLocator()), 
-            viewModelFactory: x => MainWindowViewModel.ServiceProvider.GetRequiredService(x)));
+                viewLocator:new WindowLocator()), 
+                viewModelFactory: x => MainWindowViewModel.ServiceProvider.GetRequiredService(x)));
     }
     
     public override void Initialize()

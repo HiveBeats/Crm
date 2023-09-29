@@ -1,19 +1,25 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Crm.Client.Avalonia.Views.Clients.ClientsView">
-	<DockPanel>
-		<StackPanel DockPanel.Dock="Top">
-			<Button Command="{Binding CreateOrderCommand}">Создать заказ</Button>
-		</StackPanel>
-		<DataGrid Name="MyDataGrid" Items="{Binding Items}" SelectedItem="{Binding CurrentItem, Mode=TwoWay}" AutoGenerateColumns="False">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Имя"  Binding="{Binding Name}"/>
-				<DataGridTextColumn Header="Контакт" Binding="{Binding Contact}" />
-			</DataGrid.Columns>
-
-		</DataGrid>
-	</DockPanel>
+<UserControl
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Crm.Client.Avalonia.Views.Clients.ClientsView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <Button Command="{Binding CreateOrderCommand}">Создать заказ</Button>
+        </StackPanel>
+        <DataGrid
+            AutoGenerateColumns="False"
+            Items="{Binding Items}"
+            Name="MyDataGrid"
+            SelectedItem="{Binding CurrentItem, Mode=TwoWay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Имя" />
+                <DataGridTextColumn Binding="{Binding Contact}" Header="Контакт" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
 </UserControl>

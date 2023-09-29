@@ -19,7 +19,7 @@ public class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IPageViewM
     public ClientsViewModel(IClientService clientService) : base(new ViewModelActivator())
     {
         ItemsService = clientService;
-        
+
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
 
         ShowCreateOrderDialog = new Interaction<CreateClientOrderViewModel, Unit>();
