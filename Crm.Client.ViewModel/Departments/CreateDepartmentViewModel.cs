@@ -18,8 +18,6 @@ public partial class CreateDepartmentViewModel : ViewModelBase, IModalDialogView
     private readonly IDepartmentsService _departmentsService;
     private string _name;
     private Department _parent;
-    private readonly IObservable<bool> _nameValidation;
-    private ReactiveCommand<Unit, Department?> _createCommand;
     
     public CreateDepartmentViewModel(
         IDepartmentsService departmentsService,
@@ -27,7 +25,7 @@ public partial class CreateDepartmentViewModel : ViewModelBase, IModalDialogView
     {
         _departmentsService = departmentsService;
         _parent = parent;
-        _nameValidation = this.WhenAnyValue(x => x.Name, name => !string.IsNullOrWhiteSpace(name));
+        OkCommand = new RelayCommand(Create);
     }
 
     public string Name
@@ -43,13 +41,18 @@ public partial class CreateDepartmentViewModel : ViewModelBase, IModalDialogView
     }
     
     public Department Result { get; set; }
-
-    public ReactiveCommand<Unit, Department> CreateCommand => _createCommand ??= 
-        ReactiveCommand.CreateFromTask(async () => Result = await _departmentsService.Create(Name, Parent), 
-            canExecute: _nameValidation);
-    
     public bool? DialogResult { get; set; }
-
+    
+    public RelayCommand OkCommand { get; }
+    private async void Create()
+    {
+        if (!string.IsNullOrWhiteSpace(Name))
+        {
+            DialogResult = true;
+            Result = await _departmentsService.Create(Name, Parent);
+            RequestClose?.Invoke(this, EventArgs.Empty);
+        }
+    }
 
     public event EventHandler RequestClose;
     [RelayCommand]

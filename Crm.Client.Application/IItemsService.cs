@@ -1,4 +1,5 @@
 ﻿namespace Crm.Client.Application;
+
 public interface IItemsService<T>
     where T : class
 {

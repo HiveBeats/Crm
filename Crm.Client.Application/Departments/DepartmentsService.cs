@@ -3,17 +3,16 @@ using Crm.Server.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Crm.Client.Application.Departments;
-public interface IDepartmentsService:IItemsService<Department>
+
+public interface IDepartmentsService : IItemsService<Department>
 {
     Task<Department> Create(string name, Department parent = null);
 }
+
 public class DepartmentsService : IDepartmentsService
 {
     private readonly CrmDbContext _db;
-    public DepartmentsService(CrmDbContext db)
-    {
-        _db = db;
-    }
+    public DepartmentsService(CrmDbContext db) => _db = db;
 
     public async Task<IReadOnlyCollection<Department>> GetAll()
     {
@@ -26,14 +25,9 @@ public class DepartmentsService : IDepartmentsService
 
     public async Task<Department> Create(string name, Department parent = null)
     {
-        Department result;
         var department = new Department(name, parent);
         _db.Departments.Add(department);
         await _db.SaveChangesAsync();
-
-        result = department;
-        
-
-        return result;
+        return department;
     }
 }

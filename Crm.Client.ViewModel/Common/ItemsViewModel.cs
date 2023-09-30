@@ -9,22 +9,24 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace Crm.Client.ViewModel.Common;
+
 public interface IItemViewModel
 {
 	IEntity CurrentItem { get; }
 }
+
 public class ItemsViewModelBase<T> : ViewModelBase, IItemViewModel
 	where T : class, IEntity
 {
-	private ObservableCollection<T> _items;
+	private ObservableCollection<T> _items = new ();
 	private T _currentItem;
 
-	protected ItemsViewModelBase(ViewModelActivator activator) : base(activator){}
+	protected ItemsViewModelBase(ViewModelActivator activator) : base(activator){ }
 
 	[UsedImplicitly]
 	public ObservableCollection<T> Items
 	{
-		get => _items ??= new ObservableCollection<T>();
+		get => _items;// ??= new ObservableCollection<T>();
 		set => SetProperty(ref _items, value);
 	}
 
@@ -50,10 +52,7 @@ public class ItemsViewModel<T> : ItemsViewModelBase<T>
 {
 	protected IItemsService<T> ItemsService;
 
-	protected ItemsViewModel(ViewModelActivator activator) : base(activator)
-	{
-        
-    }
+	protected ItemsViewModel(ViewModelActivator activator) : base(activator){ }
 
 	protected override async Task OnLoaded(IScheduler arg1, CancellationToken arg2)
 	{
@@ -69,10 +68,7 @@ public class RelativeItemsViewModel<T, TRelative> : ItemsViewModelBase<TRelative
 	protected T OwnerItem;
 	protected IRelativeItemsService<T, TRelative> ItemsService;
 
-	protected RelativeItemsViewModel(ViewModelActivator activator) : base(activator)
-	{
-
-	}
+	protected RelativeItemsViewModel(ViewModelActivator activator) : base(activator){ }
 
     protected override async Task OnLoaded(IScheduler arg1, CancellationToken arg2)
     {

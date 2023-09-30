@@ -11,9 +11,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Crm.Client.ViewModel.Common;
-public class ViewModelBase : ObservableObject, IActivatableViewModel, INotifyPropertyChanged
+public class ViewModelBase : ObservableObject, IActivatableViewModel
 {
-    protected ViewModelBase(){}
+    protected ViewModelBase(){ }
     
     protected ViewModelBase(ViewModelActivator activator)
     {
