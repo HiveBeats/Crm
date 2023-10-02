@@ -10,7 +10,5 @@ public partial class CreateClientOrderWindow : ReactiveWindow<CreateClientOrderV
     public CreateClientOrderWindow()
     {
         InitializeComponent();
-        this.WhenActivated(d => d(ViewModel!.CreateCommand.Subscribe(_ => Close())));
-        this.WhenActivated(d => d(ViewModel!.CancelCommand.Subscribe(_ => Close())));
     }
 }

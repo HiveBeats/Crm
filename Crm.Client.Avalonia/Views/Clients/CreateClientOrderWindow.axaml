@@ -1,13 +1,15 @@
-<Window     xmlns="https://github.com/avaloniaui"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Crm.Client.Avalonia.Views.Clients.CreateClientOrderWindow"
-			Title="Зарегистрировать клиентский заказ">
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Crm.Client.Avalonia.Views.Clients.CreateClientOrderWindow"
+        Title="Зарегистрировать клиентский заказ"
+        Height="640"
+        Width="480">
 	<StackPanel VerticalAlignment="Center"
-					HorizontalAlignment="Center"
-					Width="300">
+	            HorizontalAlignment="Center"
+	            Width="300">
 		<!--<ProgressBar HorizontalAlignment="Stretch"
                      IsIndeterminate="{Binding IsBusy}"
                      IsVisible="{Binding IsBusy}"
@@ -33,7 +35,7 @@
                    TextWrapping="Wrap" />-->
 		<Button Content="Ок"
                 HorizontalAlignment="Stretch"
-                Command="{Binding CreateCommand}"
+                Command="{Binding OkCommand}"
                 Margin="0 10" />
 		<Button Content="Отмена"
                 HorizontalAlignment="Stretch"
