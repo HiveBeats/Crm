@@ -7,11 +7,10 @@ using ReactiveUI;
 
 namespace Crm.Client.Avalonia.Views.Clients;
 
-public partial class ClientsPageView : ReactiveUserControl<ClientsPageViewModel>
+public partial class ClientsPageView : UserControl
 {
     public ClientsPageView()
     {
         InitializeComponent();
-        this.WhenActivated(disposables => { });
     }
 }

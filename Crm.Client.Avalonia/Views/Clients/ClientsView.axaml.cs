@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Crm.Client.Avalonia.Views.Clients;
 
-public partial class ClientsView : ReactiveUserControl<ClientsViewModel>
+public partial class ClientsView : UserControl
 {
     public ClientsView()
     {

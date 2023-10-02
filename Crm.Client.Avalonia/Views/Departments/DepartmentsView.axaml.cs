@@ -14,7 +14,7 @@ using System.Reactive;
 
 namespace Crm.Client.Avalonia.Views.Departments;
 
-public partial class DepartmentsView : ReactiveUserControl<DepartmentsViewModel>
+public partial class DepartmentsView : UserControl
 {
     public DepartmentsView()
     {
