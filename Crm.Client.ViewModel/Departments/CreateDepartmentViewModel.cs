@@ -5,43 +5,64 @@ using ReactiveUI;
 using Splat;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using HanumanInstitute.MvvmDialogs;
 
 namespace Crm.Client.ViewModel.Departments;
-public class CreateDepartmentViewModel : ViewModelBase
+public partial class CreateDepartmentViewModel : ViewModelBase, IModalDialogViewModel, ICloseable
 {
     private readonly IDepartmentsService _departmentsService;
     private string _name;
     private Department _parent;
-    private readonly IObservable<bool> _nameValidation;
-    private ReactiveCommand<Unit, Department?> _createCommand;
     
-    public CreateDepartmentViewModel(IDepartmentsService departmentsService, Department parent = null) : base(new ViewModelActivator())
+    public CreateDepartmentViewModel(
+        IDepartmentsService departmentsService,
+        Department parent = null) : base(new ViewModelActivator())
     {
         _departmentsService = departmentsService;
         _parent = parent;
-        _nameValidation = this.WhenAnyValue(x => x.Name, name => !string.IsNullOrWhiteSpace(name));
-        CancelCommand = ReactiveCommand.Create(() => { });
+        CreateCommand = new RelayCommand(Create, CanCreate);
     }
-
+    
     public string Name
     {
-        get => _name; 
-        set => this.RaiseAndSetIfChanged(ref _name, value);
+        get => _name;
+        set
+        {
+            SetProperty(ref _name, value);
+            this.CreateCommand.NotifyCanExecuteChanged();
+        }
     }
 
     public Department Parent
     {
         get => _parent;
-        set => this.RaiseAndSetIfChanged(ref _parent, value);
+        set => SetProperty(ref _parent, value);
     }
+    
+    public Department Result { get; set; }
+    public bool? DialogResult { get; set; }
+    
+    public RelayCommand CreateCommand { get; }
+    private async void Create()
+    {
+        DialogResult = true;
+        Result = await _departmentsService.Create(Name, Parent);
+        RequestClose?.Invoke(this, EventArgs.Empty);
+    }
+    private bool CanCreate() => Name is null ? false : true;
 
-    public ReactiveCommand<Unit, Department> CreateCommand => _createCommand ??= 
-        ReactiveCommand.CreateFromTask(async () => await _departmentsService.Create(Name, Parent), 
-            canExecute: _nameValidation);
-
-    public ReactiveCommand<Unit, Unit> CancelCommand { get; }
+    public event EventHandler RequestClose;
+    [RelayCommand]
+    public void Cancel()
+    {
+        DialogResult = false;
+        RequestClose?.Invoke(this, EventArgs.Empty);
+    }
 }

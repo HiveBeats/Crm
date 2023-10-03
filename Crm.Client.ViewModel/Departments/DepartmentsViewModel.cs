@@ -14,32 +14,42 @@ using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
+using HanumanInstitute.MvvmDialogs;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Task = System.Threading.Tasks.Task;
 
 namespace Crm.Client.ViewModel.Departments;
 
 [UsedImplicitly]
-public class DepartmentsViewModel : ItemsViewModel<Department>, IPageViewModel
+public partial class DepartmentsViewModel : ItemsViewModel<Department>, IPageViewModel
 {
-    public DepartmentsViewModel(IDepartmentsService service) : base(new ViewModelActivator())
+    private IDialogService _dialogService;
+    private MainWindowViewModel _mainWindowViewModel;
+    private IDepartmentsService _departmentsService;
+    
+    public DepartmentsViewModel(
+        IDepartmentsService service, 
+        IDialogService dialogService, 
+        MainWindowViewModel mainWindowViewModel,
+        IDepartmentsService departmentsService) : base(new ViewModelActivator())
     {
         ItemsService = service;
+        _dialogService = dialogService;
+        _mainWindowViewModel = mainWindowViewModel;
+        _departmentsService = departmentsService;
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
-
-        ShowCreateDialog = new Interaction<CreateDepartmentViewModel, Department>();
-        CreateCommand = ReactiveCommand.CreateFromTask(async () =>
-        {
-            var vm = new CreateDepartmentViewModel(MainWindowViewModel.ServiceProvider.GetRequiredService<IDepartmentsService>(), CurrentItem);
-
-            var result = await ShowCreateDialog.Handle(vm);
-            if (result != null)
-            {
-                Items.Add(result);
-            }
-        });
     }
 
-    public ICommand CreateCommand { get; }
-    public Interaction<CreateDepartmentViewModel, Department> ShowCreateDialog { get; }
+    [RelayCommand]
+    private async Task Create()
+    {
+        var dialogViewModel = new CreateDepartmentViewModel(_departmentsService, CurrentItem);
+        var result = await _dialogService.ShowDialogAsync(_mainWindowViewModel, dialogViewModel);
+        if (result == true)
+        {
+            Items.Add(dialogViewModel.Result);
+        }
+    }
 }

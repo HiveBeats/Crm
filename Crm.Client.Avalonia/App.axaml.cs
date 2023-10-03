@@ -12,6 +12,8 @@ using Crm.Client.ViewModel;
 using Crm.Client.ViewModel.Common;
 using Crm.Server.Infrastructure.Database;
 using Microsoft.Extensions.Configuration;
+using HanumanInstitute.MvvmDialogs;
+using HanumanInstitute.MvvmDialogs.Avalonia;
 
 namespace Crm.Client.Avalonia;
 public partial class App : Applicat
@@ -28,6 +30,11 @@ public partial class App : Applicat
         services.AddDatabase(Configuration.GetConnectionString("NpgConnection"));
         services.AddViewModels();
         services.AddApplicationServices();
+        services.AddSingleton<MainWindowViewModel>();
+        services.AddSingleton<IDialogService>(new DialogService(
+            new DialogManager(
+                viewLocator:new WindowLocator()), 
+                viewModelFactory: x => MainWindowViewModel.ServiceProvider.GetRequiredService(x)));
     }
     
     public override void Initialize()
@@ -45,10 +52,13 @@ public partial class App : Applicat
         {
             // Line below is needed to remove Avalonia data validation.
             // Without this line you will get duplicate validations from both Avalonia and CT
+            var mainVm = serviceProvider.GetRequiredService<MainWindowViewModel>();
+            mainVm.Initialize(serviceProvider);
+            
             ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(serviceProvider),
+                DataContext = mainVm,
             };
         }
 

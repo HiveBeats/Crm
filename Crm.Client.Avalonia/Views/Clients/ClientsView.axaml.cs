@@ -13,20 +13,10 @@ using System.Threading.Tasks;
 
 namespace Crm.Client.Avalonia.Views.Clients;
 
-public partial class ClientsView : ReactiveUserControl<ClientsViewModel>
+public partial class ClientsView : UserControl
 {
     public ClientsView()
     {
         InitializeComponent();
-        this.WhenActivated(d => d(ViewModel!.ShowCreateOrderDialog.RegisterHandler(DoShowDialogAsync)));
-    }
-
-    private async Task DoShowDialogAsync(InteractionContext<CreateClientOrderViewModel, Unit> interaction)
-    {
-        var dialog = new CreateClientOrderWindow();
-        dialog.DataContext = interaction.Input;
-        var parents = this.GetSelfAndVisualAncestors();
-        var result = await dialog.ShowDialog<Unit>(parents.Last() as Window);
-        interaction.SetOutput(result);
     }
 }

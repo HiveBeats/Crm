@@ -23,27 +23,26 @@ public class AssignClientManagerViewModel : ViewModelBase
         _clientService = clientService;
         _employeeService = employeeService;
         Client = client;
-
         _employeeValidation = this.WhenAnyValue<AssignClientManagerViewModel, bool, Employee>(x => x.Employee, emp => emp != null);
     }
 
     public ObservableCollection<Employee> Employees
     {
         get => _employees ??= new ObservableCollection<Employee>();
-        set => this.RaiseAndSetIfChanged(ref _employees, value);
+        set => SetProperty(ref _employees, value);
     }
 
     public Employee Employee
     {
         get => _employee;
-        set => this.RaiseAndSetIfChanged(ref _employee, value);
+        set => SetProperty(ref _employee, value);
     }
 
     [UsedImplicitly]
     public Domain.Models.Client Client
     {
         get => _client;
-        set => this.RaiseAndSetIfChanged(ref _client, value);
+        set => SetProperty(ref _client, value);
     }
 
     public IReactiveCommand AssignCommand => _assignCommand ??= ReactiveCommand.CreateFromTask(async () =>

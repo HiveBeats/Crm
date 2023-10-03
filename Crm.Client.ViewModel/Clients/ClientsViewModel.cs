@@ -8,36 +8,37 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
+using HanumanInstitute.MvvmDialogs;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Crm.Client.ViewModel.Clients;
 
 [UsedImplicitly]
-public class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IPageViewModel
+public partial class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IPageViewModel
 {
-    public ClientsViewModel(IClientService clientService) : base(new ViewModelActivator())
+    private readonly IClientOrdersService _clientOrdersService;
+    private readonly IDialogService _dialogService;
+    private readonly MainWindowViewModel _mainWindowViewModel;
+    
+    public ClientsViewModel(
+        IClientService clientService, 
+        IClientOrdersService clientOrdersService,
+        IDialogService dialogService,
+        MainWindowViewModel mainWindowViewModel) : base(new ViewModelActivator())
     {
         ItemsService = clientService;
-        
+        _clientOrdersService = clientOrdersService;
+        _dialogService = dialogService;
+        _mainWindowViewModel = mainWindowViewModel;
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
-
-        ShowCreateOrderDialog = new Interaction<CreateClientOrderViewModel, Unit>();
-        
-        var createOrderValidation = this
-            .WhenAnyValue<ClientsViewModel, bool, Domain.Models.Client>(x => x.CurrentItem, 
-                item => item!= null);
-        
-        CreateOrderCommand = ReactiveCommand.CreateFromTask(CreateClientOrderAsync, canExecute: createOrderValidation);
     }
-    
-    public ICommand CreateOrderCommand { get; }
-    public Interaction<CreateClientOrderViewModel, Unit> ShowCreateOrderDialog { get; }
 
-    private async Task CreateClientOrderAsync()
+    [RelayCommand]
+    private async Task CreateOrderCommand()
     {
-        var vm = new CreateClientOrderViewModel(CurrentItem, MainWindowViewModel.ServiceProvider.GetRequiredService<IClientOrdersService>());
-        await ShowCreateOrderDialog.Handle(vm);
-        OnMasterChanged();
+        var dialogViewModel = new CreateClientOrderViewModel(CurrentItem, _clientOrdersService);
+        var result = await _dialogService.ShowDialogAsync(_mainWindowViewModel, dialogViewModel);
     }
 }

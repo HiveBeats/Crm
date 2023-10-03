@@ -29,7 +29,7 @@ public class NavigationViewModel:ViewModelBase, IPageViewModel
 	public ViewModelBase CurrentContext 
 	{ 
 		get => _currentContext; 
-		set => this.RaiseAndSetIfChanged(ref _currentContext, value); 
+		set => SetProperty(ref _currentContext, value); 
 	}
 
 	[UsedImplicitly]

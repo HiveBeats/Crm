@@ -20,13 +20,13 @@ public class CreateClientViewModel : ViewModelBase
     public string Name
     {
         get => _name;
-        set => this.RaiseAndSetIfChanged(ref _name, value);
+        set => SetProperty(ref _name, value);
     }
 
     public string Contact
     {
         get => _contact;
-        set => this.RaiseAndSetIfChanged(ref _contact, value);
+        set => SetProperty(ref _contact, value);
     }
 
     public IReactiveCommand CreateCommand => _createCommand ??= ReactiveCommand.CreateFromTask(async () =>
