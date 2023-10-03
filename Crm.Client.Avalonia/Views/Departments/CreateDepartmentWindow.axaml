@@ -17,7 +17,7 @@
         <TextBox Text="{Binding Name, Mode=TwoWay}" Watermark="Название подразделения" />
 
         <Button
-            Command="{Binding OkCommand}"
+            Command="{Binding CreateCommand}"
             Content="Ок"
             HorizontalAlignment="Stretch"
             IsDefault="True"

@@ -27,17 +27,16 @@ public partial class CreateDepartmentViewModel : ViewModelBase, IModalDialogView
     {
         _departmentsService = departmentsService;
         _parent = parent;
-        OkCommand = new RelayCommand(Create, CanOk);
+        CreateCommand = new RelayCommand(Create, CanCreate);
     }
-
-
+    
     public string Name
     {
         get => _name;
         set
         {
             SetProperty(ref _name, value);
-            this.OkCommand.NotifyCanExecuteChanged();
+            this.CreateCommand.NotifyCanExecuteChanged();
         }
     }
 
@@ -50,14 +49,14 @@ public partial class CreateDepartmentViewModel : ViewModelBase, IModalDialogView
     public Department Result { get; set; }
     public bool? DialogResult { get; set; }
     
-    public RelayCommand OkCommand { get; }
+    public RelayCommand CreateCommand { get; }
     private async void Create()
     {
         DialogResult = true;
         Result = await _departmentsService.Create(Name, Parent);
         RequestClose?.Invoke(this, EventArgs.Empty);
     }
-    private bool CanOk() => Name is null ? false : true;
+    private bool CanCreate() => Name is null ? false : true;
 
     public event EventHandler RequestClose;
     [RelayCommand]

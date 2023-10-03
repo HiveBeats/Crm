@@ -35,7 +35,7 @@
                    TextWrapping="Wrap" />-->
 		<Button Content="Ок"
                 HorizontalAlignment="Stretch"
-                Command="{Binding OkCommand}"
+                Command="{Binding CreateCommand}"
                 Margin="0 10" />
 		<Button Content="Отмена"
                 HorizontalAlignment="Stretch"
