@@ -22,6 +22,7 @@ public partial class CreateClientOrderViewModel : ViewModelBase, IModalDialogVie
 	{
 		_client = client;
 		_clientOrdersService = clientOrdersService;
+		OkCommand = new RelayCommand(Ok, CanOk);
 	}
 
 	public bool? DialogResult { get; set; }
@@ -30,7 +31,11 @@ public partial class CreateClientOrderViewModel : ViewModelBase, IModalDialogVie
 	public string Name
 	{
 		get => _name;
-		set => SetProperty(ref _name, value);
+		set
+		{
+			SetProperty(ref _name, value);
+			this.OkCommand.NotifyCanExecuteChanged();
+		}
 	}
 
 	public string Description
@@ -39,17 +44,15 @@ public partial class CreateClientOrderViewModel : ViewModelBase, IModalDialogVie
 		set => SetProperty(ref _description, value);
 	}
 
-	[RelayCommand]
+	public RelayCommand OkCommand { get; }
 	private async void Ok()
 	{
-		if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Description))
-		{
-			DialogResult = true;
-			OrderId = await _clientOrdersService.Create(_client, Name, Description);
-			RequestClose?.Invoke(this, EventArgs.Empty);
-		}
+		DialogResult = true;
+		OrderId = await _clientOrdersService.Create(_client, Name, Description);
+		RequestClose?.Invoke(this, EventArgs.Empty);
 	}
-	
+	private bool CanOk() => Name is not null ? true : false;
+
 	public event EventHandler RequestClose;
 	[RelayCommand]
 	private void Cancel()
