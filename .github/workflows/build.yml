@@ -17,6 +17,5 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    # todo: uncomment when there will be tests
-    # - name: Test
-    #   run: dotnet test --no-build --verbosity normal
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
