@@ -21,7 +21,7 @@ public class ItemsViewModelBase<T> : ViewModelBase, IItemViewModel
 	private ObservableCollection<T> _items = new ();
 	private T _currentItem;
 
-	protected ItemsViewModelBase(ViewModelActivator activator) : base(activator){ }
+	protected ItemsViewModelBase() : base(){ }
 
 	[UsedImplicitly]
 	public ObservableCollection<T> Items
@@ -52,7 +52,7 @@ public class ItemsViewModel<T> : ItemsViewModelBase<T>
 {
 	protected IItemsService<T> ItemsService;
 
-	protected ItemsViewModel(ViewModelActivator activator) : base(activator){ }
+	protected ItemsViewModel() : base(){ }
 
 	protected override async Task OnLoaded(IScheduler arg1, CancellationToken arg2)
 	{
@@ -68,7 +68,7 @@ public class RelativeItemsViewModel<T, TRelative> : ItemsViewModelBase<TRelative
 	protected T OwnerItem;
 	protected IRelativeItemsService<T, TRelative> ItemsService;
 
-	protected RelativeItemsViewModel(ViewModelActivator activator) : base(activator){ }
+	protected RelativeItemsViewModel() : base(){ }
 
     protected override async Task OnLoaded(IScheduler arg1, CancellationToken arg2)
     {

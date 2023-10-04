@@ -5,7 +5,10 @@ using Crm.Domain.Models;
 using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
+using System.Reactive.Concurrency;
+using System.Threading;
 using JetBrains.Annotations;
+using Task = System.Threading.Tasks.Task;
 
 namespace Crm.Client.ViewModel.Clients;
 public class AssignClientManagerViewModel : ViewModelBase
@@ -18,12 +21,13 @@ public class AssignClientManagerViewModel : ViewModelBase
     private readonly IClientService _clientService;
     private readonly IEmployeeService _employeeService;
     
-    public AssignClientManagerViewModel(Domain.Models.Client client, IClientService clientService, IEmployeeService employeeService) : base(new ViewModelActivator())
+    public AssignClientManagerViewModel(Domain.Models.Client client, IClientService clientService, IEmployeeService employeeService) : base()
     {
         _clientService = clientService;
         _employeeService = employeeService;
         Client = client;
         _employeeValidation = this.WhenAnyValue<AssignClientManagerViewModel, bool, Employee>(x => x.Employee, emp => emp != null);
+        RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 
     public ObservableCollection<Employee> Employees
@@ -57,7 +61,7 @@ public class AssignClientManagerViewModel : ViewModelBase
         await _clientService.AssignManager(client, employee);
     }, canExecute: _employeeValidation);
 
-    protected override async void HandleActivation()
+    protected override async Task OnLoaded(IScheduler arg1, CancellationToken arg2)
     {
         Employees = new ObservableCollection<Employee>(await _employeeService.GetAll());
     }

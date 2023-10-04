@@ -26,7 +26,7 @@ public partial class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IP
         IClientService clientService, 
         IClientOrdersService clientOrdersService,
         IDialogService dialogService,
-        MainWindowViewModel mainWindowViewModel) : base(new ViewModelActivator())
+        MainWindowViewModel mainWindowViewModel) : base()
     {
         ItemsService = clientService;
         _clientOrdersService = clientOrdersService;

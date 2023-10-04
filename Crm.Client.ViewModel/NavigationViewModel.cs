@@ -17,7 +17,7 @@ public class NavigationViewModel:ViewModelBase, IPageViewModel
 	private readonly ResourcesViewModel _resourcesViewModel;
 	private readonly DepartmentsViewModel _departmentsViewModel;
 	private readonly ClientsPageViewModel _clientsViewModel;
-	public NavigationViewModel(): base(new ReactiveUI.ViewModelActivator())
+	public NavigationViewModel(): base()
 	{
 		_resourcesViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<ResourcesViewModel>();
 		_departmentsViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<DepartmentsViewModel>();

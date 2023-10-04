@@ -7,7 +7,7 @@ using System.Reactive.Concurrency;
 namespace Crm.Client.ViewModel.Employees;
 public class EmployeeClientsViewModel : RelativeItemsViewModel<Employee, Domain.Models.Client>
 {
-	public EmployeeClientsViewModel(Employee employee, IEmployeeClientsService employeeClientsService) : base(new ReactiveUI.ViewModelActivator())
+	public EmployeeClientsViewModel(Employee employee, IEmployeeClientsService employeeClientsService) : base()
 	{
 		OwnerItem = employee;
 		ItemsService = employeeClientsService;

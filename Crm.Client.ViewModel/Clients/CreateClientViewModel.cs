@@ -11,7 +11,7 @@ public class CreateClientViewModel : ViewModelBase
     private IReactiveCommand _createCommand;
     private readonly IObservable<bool> _nameValidation;
     private readonly IClientService _clientService;
-    public CreateClientViewModel(IClientService clientService) : base(new ViewModelActivator())
+    public CreateClientViewModel(IClientService clientService) : base()
     {
         _clientService = clientService;
         _nameValidation = this.WhenAnyValue(x => x.Name, name => !string.IsNullOrWhiteSpace(name));

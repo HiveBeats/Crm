@@ -1,6 +1,4 @@
-﻿using ReactiveUI;
-using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace Crm.Client.ViewModel.Common;
 public class PageViewModel<T, TDetail>: ViewModelBase, IPageViewModel
@@ -10,7 +8,7 @@ public class PageViewModel<T, TDetail>: ViewModelBase, IPageViewModel
 	private T _masterViewModel;
 	private TDetail _detailViewModel;
 
-	protected PageViewModel(): base(new ViewModelActivator())
+	protected PageViewModel(): base()
 	{
 		//todo:
 		//this.WhenAny(x => x.MasterViewModel.CurrentItem) ...

@@ -14,7 +14,7 @@ public class LoginViewModel : ViewModelBase, IPageViewModel
 	private readonly IAuthConfiguration _auth;
 	private readonly IAuthService _authService;
 	
-	public LoginViewModel(IAuthService service) : base(new ViewModelActivator())
+	public LoginViewModel(IAuthService service) : base()
 	{
 		//todo: configure options
 		_auth = null;

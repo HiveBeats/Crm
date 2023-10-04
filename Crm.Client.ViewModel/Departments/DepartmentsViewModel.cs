@@ -33,7 +33,7 @@ public partial class DepartmentsViewModel : ItemsViewModel<Department>, IPageVie
         IDepartmentsService service, 
         IDialogService dialogService, 
         MainWindowViewModel mainWindowViewModel,
-        IDepartmentsService departmentsService) : base(new ViewModelActivator())
+        IDepartmentsService departmentsService) : base()
     {
         ItemsService = service;
         _dialogService = dialogService;

@@ -23,7 +23,7 @@ public partial class CreateDepartmentViewModel : ViewModelBase, IModalDialogView
     
     public CreateDepartmentViewModel(
         IDepartmentsService departmentsService,
-        Department parent = null) : base(new ViewModelActivator())
+        Department parent = null) : base()
     {
         _departmentsService = departmentsService;
         _parent = parent;

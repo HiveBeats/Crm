@@ -16,7 +16,7 @@ public partial class CreateClientOrderViewModel : ViewModelBase, IModalDialogVie
 
     public CreateClientOrderViewModel(
         Domain.Models.Client client,
-        IClientOrdersService clientOrdersService) : base(new ViewModelActivator())
+        IClientOrdersService clientOrdersService) : base()
     {
         _client = client;
         _clientOrdersService = clientOrdersService;

@@ -12,7 +12,7 @@ public class CreateResourceViewModel : ViewModelBase
     private readonly IObservable<bool> _nameValidation; //todo: validations dictionary in base model
     private readonly IResourceService _resourceService;
     
-    public CreateResourceViewModel(IResourceService resourceService) : base(new ViewModelActivator())
+    public CreateResourceViewModel(IResourceService resourceService) : base()
     {
         _resourceService = resourceService;
 

@@ -9,7 +9,7 @@ public class MainWindowViewModel : ViewModelBase
 {
     private Crm.Client.ViewModel.Common.ViewModelBase _currentViewModel;
     
-    public MainWindowViewModel(): base(new ViewModelActivator())
+    public MainWindowViewModel(): base()
     {   
         
     }

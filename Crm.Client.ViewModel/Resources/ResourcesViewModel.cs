@@ -11,7 +11,7 @@ namespace Crm.Client.ViewModel.Resources;
 [UsedImplicitly]
 public class ResourcesViewModel : ItemsViewModel<Resource>, IPageViewModel
 {
-    public ResourcesViewModel(IResourceService resourceService) : base(new ViewModelActivator())
+    public ResourcesViewModel(IResourceService resourceService) : base()
     {
         ItemsService = resourceService;
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
