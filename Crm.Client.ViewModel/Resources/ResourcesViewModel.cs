@@ -1,17 +1,16 @@
-﻿using Crm.Client.Application.Resources;
+﻿using System.Reactive.Concurrency;
+using Crm.Client.Application.Resources;
 using Crm.Client.ViewModel.Common;
 using Crm.Domain.Models;
-using ReactiveUI;
-using Splat;
-using System.Reactive.Concurrency;
 using JetBrains.Annotations;
+using ReactiveUI;
 
 namespace Crm.Client.ViewModel.Resources;
 
 [UsedImplicitly]
 public class ResourcesViewModel : ItemsViewModel<Resource>, IPageViewModel
 {
-    public ResourcesViewModel(IResourceService resourceService) : base()
+    public ResourcesViewModel(IResourceService resourceService)
     {
         ItemsService = resourceService;
         RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);

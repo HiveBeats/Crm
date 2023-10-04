@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using Crm.Client.Application.Clients;
 using Crm.Client.ViewModel.Common;
 using HanumanInstitute.MvvmDialogs;
-using ReactiveUI;
 
 namespace Crm.Client.ViewModel.Clients;
 
@@ -16,7 +15,7 @@ public partial class CreateClientOrderViewModel : ViewModelBase, IModalDialogVie
 
     public CreateClientOrderViewModel(
         Domain.Models.Client client,
-        IClientOrdersService clientOrdersService) : base()
+        IClientOrdersService clientOrdersService)
     {
         _client = client;
         _clientOrdersService = clientOrdersService;

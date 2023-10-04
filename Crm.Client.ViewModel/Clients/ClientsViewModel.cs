@@ -1,17 +1,11 @@
-﻿using Crm.Client.Application.Clients;
-using Crm.Client.ViewModel.Common;
-using ReactiveUI;
-using Splat;
-using System;
-using System.Reactive;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
+﻿using System.Reactive.Concurrency;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Crm.Client.Application.Clients;
+using Crm.Client.ViewModel.Common;
 using HanumanInstitute.MvvmDialogs;
 using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
+using ReactiveUI;
 
 namespace Crm.Client.ViewModel.Clients;
 
@@ -21,12 +15,12 @@ public partial class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IP
     private readonly IClientOrdersService _clientOrdersService;
     private readonly IDialogService _dialogService;
     private readonly MainWindowViewModel _mainWindowViewModel;
-    
+
     public ClientsViewModel(
-        IClientService clientService, 
+        IClientService clientService,
         IClientOrdersService clientOrdersService,
         IDialogService dialogService,
-        MainWindowViewModel mainWindowViewModel) : base()
+        MainWindowViewModel mainWindowViewModel)
     {
         ItemsService = clientService;
         _clientOrdersService = clientOrdersService;

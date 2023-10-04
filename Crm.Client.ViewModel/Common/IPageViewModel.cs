@@ -1,5 +1,5 @@
-﻿
-namespace Crm.Client.ViewModel.Common;
+﻿namespace Crm.Client.ViewModel.Common;
+
 public interface IPageViewModel
 {
 }
