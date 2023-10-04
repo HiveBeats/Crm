@@ -1,63 +1,68 @@
-﻿using Crm.Client.Application.Clients;
-using Crm.Client.ViewModel.Common;
-using ReactiveUI;
-using System;
-using System.Reactive;
+﻿using System;
 using CommunityToolkit.Mvvm.Input;
-using Crm.Domain.Models;
+using Crm.Client.Application.Clients;
+using Crm.Client.ViewModel.Common;
 using HanumanInstitute.MvvmDialogs;
+using ReactiveUI;
 
 namespace Crm.Client.ViewModel.Clients;
+
 public partial class CreateClientOrderViewModel : ViewModelBase, IModalDialogViewModel, ICloseable
 {
-	private string _name;
-	private string _description;
-	private readonly IObservable<bool> _nameValidation;
-	private readonly Domain.Models.Client _client;
-	private readonly IClientOrdersService _clientOrdersService;
-	
-	public CreateClientOrderViewModel(
-		Crm.Domain.Models.Client client, 
-		IClientOrdersService clientOrdersService) : base(new ReactiveUI.ViewModelActivator())
-	{
-		_client = client;
-		_clientOrdersService = clientOrdersService;
-		CreateCommand = new RelayCommand(Create, CanCreate);
-	}
+    private readonly Domain.Models.Client _client;
+    private readonly IClientOrdersService _clientOrdersService;
+    private string _description;
+    private string _name;
 
-	public bool? DialogResult { get; set; }
-	public Guid OrderId { get; set; }
+    public CreateClientOrderViewModel(
+        Domain.Models.Client client,
+        IClientOrdersService clientOrdersService) : base(new ViewModelActivator())
+    {
+        _client = client;
+        _clientOrdersService = clientOrdersService;
+        CreateCommand = new RelayCommand(Create, CanCreate);
+    }
 
-	public string Name
-	{
-		get => _name;
-		set
-		{
-			SetProperty(ref _name, value);
-			this.CreateCommand.NotifyCanExecuteChanged();
-		}
-	}
+    public Guid OrderId { get; set; }
 
-	public string Description
-	{
-		get => _description;
-		set => SetProperty(ref _description, value);
-	}
+    public string Name
+    {
+        get => _name;
+        set
+        {
+            SetProperty(ref _name, value);
+            CreateCommand.NotifyCanExecuteChanged();
+        }
+    }
 
-	public RelayCommand CreateCommand { get; }
-	private async void Create()
-	{
-		DialogResult = true;
-		OrderId = await _clientOrdersService.Create(_client, Name, Description);
-		RequestClose?.Invoke(this, EventArgs.Empty);
-	}
-	private bool CanCreate() => Name is not null ? true : false;
+    public string Description
+    {
+        get => _description;
+        set => SetProperty(ref _description, value);
+    }
 
-	public event EventHandler RequestClose;
-	[RelayCommand]
-	private void Cancel()
-	{
-		DialogResult = false;
-		RequestClose?.Invoke(this, EventArgs.Empty);
-	}
+    public RelayCommand CreateCommand { get; }
+
+    public event EventHandler RequestClose;
+
+    public bool? DialogResult { get; set; }
+
+    private async void Create()
+    {
+        DialogResult = true;
+        OrderId = await _clientOrdersService.Create(_client, Name, Description);
+        RequestClose?.Invoke(this, EventArgs.Empty);
+    }
+
+    private bool CanCreate()
+    {
+        return Name is not null ? true : false;
+    }
+
+    [RelayCommand]
+    private void Cancel()
+    {
+        DialogResult = false;
+        RequestClose?.Invoke(this, EventArgs.Empty);
+    }
 }

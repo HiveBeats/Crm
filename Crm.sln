@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crm.Client.Avalonia", "Crm.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crm.Server.Infrastructure.Database", "Crm.Server.Infrastructure.Database\Crm.Server.Infrastructure.Database.csproj", "{47BA2E1B-2021-48FC-8A4B-D4FEE87D6913}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crm.Client.Tests", "Crm.Client.Tests\Crm.Client.Tests.csproj", "{2C611BEA-8E11-4DF7-A787-BE2DC10EBDA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{47BA2E1B-2021-48FC-8A4B-D4FEE87D6913}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47BA2E1B-2021-48FC-8A4B-D4FEE87D6913}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47BA2E1B-2021-48FC-8A4B-D4FEE87D6913}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C611BEA-8E11-4DF7-A787-BE2DC10EBDA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C611BEA-8E11-4DF7-A787-BE2DC10EBDA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C611BEA-8E11-4DF7-A787-BE2DC10EBDA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C611BEA-8E11-4DF7-A787-BE2DC10EBDA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
