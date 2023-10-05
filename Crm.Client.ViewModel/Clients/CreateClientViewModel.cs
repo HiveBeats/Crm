@@ -1,17 +1,19 @@
-﻿using Crm.Client.Application.Clients;
+﻿using System;
+using Crm.Client.Application.Clients;
 using Crm.Client.ViewModel.Common;
 using ReactiveUI;
-using System;
 
 namespace Crm.Client.ViewModel.Clients;
+
 public class CreateClientViewModel : ViewModelBase
 {
-    private string _name;
+    private readonly IClientService _clientService;
+    private readonly IObservable<bool> _nameValidation;
     private string _contact;
     private IReactiveCommand _createCommand;
-    private readonly IObservable<bool> _nameValidation;
-    private readonly IClientService _clientService;
-    public CreateClientViewModel(IClientService clientService) : base(new ViewModelActivator())
+    private string _name;
+
+    public CreateClientViewModel(IClientService clientService)
     {
         _clientService = clientService;
         _nameValidation = this.WhenAnyValue(x => x.Name, name => !string.IsNullOrWhiteSpace(name));
@@ -29,8 +31,6 @@ public class CreateClientViewModel : ViewModelBase
         set => SetProperty(ref _contact, value);
     }
 
-    public IReactiveCommand CreateCommand => _createCommand ??= ReactiveCommand.CreateFromTask(async () =>
-    {
-        await _clientService.Create(_name, _contact);
-    }, canExecute: _nameValidation);
+    public IReactiveCommand CreateCommand => _createCommand ??=
+        ReactiveCommand.CreateFromTask(async () => { await _clientService.Create(_name, _contact); }, _nameValidation);
 }

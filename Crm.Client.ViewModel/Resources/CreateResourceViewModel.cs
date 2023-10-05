@@ -1,18 +1,19 @@
-﻿using Crm.Client.Application.Resources;
+﻿using System;
+using Crm.Client.Application.Resources;
 using Crm.Client.ViewModel.Common;
 using ReactiveUI;
-using System;
 
 namespace Crm.Client.ViewModel.Resources;
+
 public class CreateResourceViewModel : ViewModelBase
 {
-    private string _name;
-    private decimal _quantity = 0;
-    private IReactiveCommand _createCommand;
     private readonly IObservable<bool> _nameValidation; //todo: validations dictionary in base model
     private readonly IResourceService _resourceService;
-    
-    public CreateResourceViewModel(IResourceService resourceService) : base(new ViewModelActivator())
+    private IReactiveCommand _createCommand;
+    private string _name;
+    private decimal _quantity;
+
+    public CreateResourceViewModel(IResourceService resourceService)
     {
         _resourceService = resourceService;
 
@@ -31,8 +32,6 @@ public class CreateResourceViewModel : ViewModelBase
         set => SetProperty(ref _quantity, value);
     }
 
-    public IReactiveCommand CreateCommand => _createCommand ??= ReactiveCommand.CreateFromTask(async () =>
-    {
-        await _resourceService.Create(Name, Quantity);
-    }, canExecute: _nameValidation);
+    public IReactiveCommand CreateCommand => _createCommand ??=
+        ReactiveCommand.CreateFromTask(async () => { await _resourceService.Create(Name, Quantity); }, _nameValidation);
 }
