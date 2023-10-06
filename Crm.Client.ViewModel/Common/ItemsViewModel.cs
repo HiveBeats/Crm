@@ -35,7 +35,11 @@ public class ItemsViewModelBase<T> : ViewModelBase, IItemViewModel
     public T CurrentItem
     {
         get => _currentItem;
-        set => SetProperty(ref _currentItem, value);
+        set
+        {
+            SetProperty(ref _currentItem, value);
+            OnMasterChanged();
+        }
     }
 
     IEntity IItemViewModel.CurrentItem => CurrentItem;

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using Crm.Client.Application.Authentication;
 using ReactiveUI;
 
@@ -18,26 +19,38 @@ public class LoginViewModel : ViewModelBase, IPageViewModel
         _auth = null;
         _authService = service;
 
-        LoginCommand = ReactiveCommand.CreateFromTask(async () => { await Login(); });
+        LoginCommand = new AsyncRelayCommand(Login, CanLogin);
     }
 
     public string UserName
     {
         get => _userName;
-        set => SetProperty(ref _userName, value);
+        set
+        {
+            SetProperty(ref _userName, value);
+            LoginCommand.NotifyCanExecuteChanged();
+        }
     }
 
     public string Password
     {
         get => _password;
-        set => SetProperty(ref _password, value);
+        set
+        {
+            SetProperty(ref _password, value);
+            LoginCommand.NotifyCanExecuteChanged();
+        }
     }
 
-    public ICommand LoginCommand { get; }
-
+    public AsyncRelayCommand LoginCommand { get; }
     private async Task Login()
     {
         var user = await _authService.Login(UserName, Password);
         //todo: save this state somehow or send message
+    }
+
+    private bool CanLogin()
+    {
+        return UserName is not null && Password is not null ? true : false;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Reactive;
+using CommunityToolkit.Mvvm.Input;
 using Crm.Client.ViewModel.Clients;
 using Crm.Client.ViewModel.Common;
 using Crm.Client.ViewModel.Departments;
@@ -23,6 +24,7 @@ public class NavigationViewModel : ViewModelBase, IPageViewModel
         _departmentsViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<DepartmentsViewModel>();
         _clientsViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<ClientsPageViewModel>();
         CurrentContext = _clientsViewModel;
+        NavigateCommand = new RelayCommand<string>(Navigate);
     }
 
     [UsedImplicitly]
@@ -32,8 +34,8 @@ public class NavigationViewModel : ViewModelBase, IPageViewModel
         set => SetProperty(ref _currentContext, value);
     }
 
-    [UsedImplicitly]
-    public ReactiveCommand<string, Unit> NavigateCommand => _navigateCommand ??= ReactiveCommand.Create<string>(name =>
+    public RelayCommand<string> NavigateCommand { get; }
+    private void Navigate(string name)
     {
         CurrentContext = name switch
         {
@@ -42,5 +44,5 @@ public class NavigationViewModel : ViewModelBase, IPageViewModel
             "Employee" => _departmentsViewModel,
             _ => CurrentContext
         };
-    });
+    }
 }
