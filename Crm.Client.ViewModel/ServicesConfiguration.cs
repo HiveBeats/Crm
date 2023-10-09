@@ -15,5 +15,7 @@ public static class ServicesConfiguration
             select assemblyType).ToArray();
 
         foreach (var vm in viewModels) service.AddTransient(vm);
+
+        service.AddTransient<InitializableViewModelFactory>();
     }
 }
