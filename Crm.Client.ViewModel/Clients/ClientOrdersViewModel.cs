@@ -8,10 +8,9 @@ namespace Crm.Client.ViewModel.Clients;
 
 public class ClientOrdersViewModel : RelativeItemsViewModel<Domain.Models.Client, Order>
 {
-    public ClientOrdersViewModel(Domain.Models.Client client, IClientOrdersService clientOrdersService)
+    public ClientOrdersViewModel(IClientOrdersService clientOrdersService)
     {
-        OwnerItem = client;
         ItemsService = clientOrdersService;
-        RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
+        // RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using Crm.Client.Application.Clients;
 using Crm.Client.ViewModel.Common;
+using Crm.Domain;
+using Crm.Domain.Models;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
@@ -14,8 +16,7 @@ public class ClientsPageViewModel : PageViewModel<ClientsViewModel, ClientOrders
     {
         MasterViewModel.MasterChanged += (s, e) =>
         {
-            DetailViewModel = new ClientOrdersViewModel((s as ClientsViewModel).CurrentItem,
-                MainWindowViewModel.ServiceProvider.GetRequiredService<IClientOrdersService>());
+            DetailViewModel = _factory.Create<ClientOrdersViewModel, Domain.Models.Client, Order>((s as ClientsViewModel).CurrentItem);
         };
     }
 }

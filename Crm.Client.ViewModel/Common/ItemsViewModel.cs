@@ -73,7 +73,7 @@ public class RelativeItemsViewModel<T, TRelative> : ItemsViewModelBase<TRelative
     where TRelative : class, IEntity
 {
     protected IRelativeItemsService<T, TRelative> ItemsService;
-    protected T OwnerItem;
+    public T OwnerItem;
 
     protected RelativeItemsViewModel()
     {

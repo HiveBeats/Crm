@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Crm.Client.ViewModel.Common;
 
@@ -8,12 +9,12 @@ public class PageViewModel<T, TDetail> : ViewModelBase, IPageViewModel
 {
     private TDetail _detailViewModel;
     private T _masterViewModel;
+    protected InitializableViewModelFactory _factory;
 
     protected PageViewModel()
     {
-        //todo:
-        //this.WhenAny(x => x.MasterViewModel.CurrentItem) ...
-        MasterViewModel = (T)MainWindowViewModel.ServiceProvider.GetService(typeof(T));
+        _factory = MainWindowViewModel.ServiceProvider.GetRequiredService<InitializableViewModelFactory>();
+        MasterViewModel = _factory.Create<T>();
     }
 
     [UsedImplicitly]

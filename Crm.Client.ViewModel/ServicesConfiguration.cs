@@ -1,4 +1,5 @@
 using System.Linq;
+using Crm.Client.ViewModel.Clients;
 using Crm.Client.ViewModel.Common;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,5 +18,6 @@ public static class ServicesConfiguration
         foreach (var vm in viewModels) service.AddTransient(vm);
 
         service.AddTransient<InitializableViewModelFactory>();
+        service.AddTransient<ClientOrdersViewModel>();
     }
 }
