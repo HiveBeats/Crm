@@ -1,6 +1,5 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Crm.Client.Avalonia.ViewModels;
 using System;
 
 namespace Crm.Client.Avalonia;
