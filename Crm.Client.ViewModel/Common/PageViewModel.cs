@@ -11,9 +11,9 @@ public class PageViewModel<T, TDetail> : ViewModelBase, IPageViewModel
     private T _masterViewModel;
     protected InitializableViewModelFactory _factory;
 
-    protected PageViewModel()
+    protected PageViewModel(InitializableViewModelFactory factory)
     {
-        _factory = MainWindowViewModel.ServiceProvider.GetRequiredService<InitializableViewModelFactory>();
+        _factory = factory;
         MasterViewModel = _factory.Create<T>();
     }
 

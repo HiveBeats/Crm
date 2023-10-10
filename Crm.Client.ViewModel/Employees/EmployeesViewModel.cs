@@ -11,6 +11,5 @@ public class EmployeesViewModel : ItemsViewModel<Employee>, IPageViewModel
     public EmployeesViewModel(IEmployeeService employeeService)
     {
         ItemsService = employeeService;
-        RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 }

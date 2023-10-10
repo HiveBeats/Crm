@@ -13,6 +13,5 @@ public class ResourcesViewModel : ItemsViewModel<Resource>, IPageViewModel
     public ResourcesViewModel(IResourceService resourceService)
     {
         ItemsService = resourceService;
-        RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 }

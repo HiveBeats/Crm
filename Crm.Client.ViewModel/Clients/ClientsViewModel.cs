@@ -26,7 +26,6 @@ public partial class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IP
         _clientOrdersService = clientOrdersService;
         _dialogService = dialogService;
         _mainWindowViewModel = mainWindowViewModel;
-        RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 
     [RelayCommand]

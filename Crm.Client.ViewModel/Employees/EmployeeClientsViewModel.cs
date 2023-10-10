@@ -12,6 +12,5 @@ public class EmployeeClientsViewModel : RelativeItemsViewModel<Employee, Domain.
     {
         OwnerItem = employee;
         ItemsService = employeeClientsService;
-        RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 }

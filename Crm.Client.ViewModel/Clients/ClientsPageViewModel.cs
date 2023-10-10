@@ -12,11 +12,11 @@ namespace Crm.Client.ViewModel.Clients;
 [UsedImplicitly]
 public class ClientsPageViewModel : PageViewModel<ClientsViewModel, ClientOrdersViewModel>
 {
-    public ClientsPageViewModel()
+    public ClientsPageViewModel(InitializableViewModelFactory factory): base(factory)
     {
         MasterViewModel.MasterChanged += (s, e) =>
         {
-            DetailViewModel = _factory.Create<ClientOrdersViewModel, Domain.Models.Client, Order>((s as ClientsViewModel).CurrentItem);
+            DetailViewModel = _factory.Create<ClientOrdersViewModel, Domain.Models.Client>((s as ClientsViewModel).CurrentItem);
         };
     }
 }

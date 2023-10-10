@@ -11,6 +11,5 @@ public class ClientOrdersViewModel : RelativeItemsViewModel<Domain.Models.Client
     public ClientOrdersViewModel(IClientOrdersService clientOrdersService)
     {
         ItemsService = clientOrdersService;
-        // RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 }

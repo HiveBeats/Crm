@@ -27,7 +27,6 @@ public partial class DepartmentsViewModel : ItemsViewModel<Department>, IPageVie
         _dialogService = dialogService;
         _mainWindowViewModel = mainWindowViewModel;
         _departmentsService = departmentsService;
-        RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 
     [RelayCommand]

@@ -9,18 +9,16 @@ public class InitializableViewModelFactory
         where TViewModel : ViewModelBase
     {
         var vm = (TViewModel)MainWindowViewModel.ServiceProvider.GetRequiredService(typeof(TViewModel));
-        vm.InitAsync();
+        _ = vm.InitAsync();
         return vm;
     }
 
-    public TViewModel Create<TViewModel, TModel, TRelativeModel>(TModel model)
-        where TViewModel : ViewModelBase
+    public TViewModel Create<TViewModel, TModel>(TModel model)
+        where TViewModel : ViewModelBase, IOwned<TModel>
         where TModel : class, IEntity
-        where TRelativeModel : class, IEntity
     {
-        var vm = MainWindowViewModel.ServiceProvider.GetService(typeof(TViewModel));
-        ((RelativeItemsViewModel<TModel, TRelativeModel>)vm).OwnerItem = model;
-        ((RelativeItemsViewModel<TModel, TRelativeModel>)vm).InitAsync();
-        return (TViewModel)vm;
+        var vm = (TViewModel)MainWindowViewModel.ServiceProvider.GetRequiredService(typeof(TViewModel));
+        _ = vm.InitFromOwnerAsync(model);
+        return vm;
     }
 }
