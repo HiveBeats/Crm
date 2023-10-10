@@ -1,8 +1,6 @@
-﻿using System.Reactive.Concurrency;
-using Crm.Client.Application.Clients;
+﻿using Crm.Client.Application.Clients;
 using Crm.Client.ViewModel.Common;
 using Crm.Domain.Models;
-using ReactiveUI;
 
 namespace Crm.Client.ViewModel.Clients;
 

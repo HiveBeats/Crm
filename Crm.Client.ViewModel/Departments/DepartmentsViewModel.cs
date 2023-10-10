@@ -1,11 +1,9 @@
-﻿using System.Reactive.Concurrency;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Crm.Client.Application.Departments;
 using Crm.Client.ViewModel.Common;
 using Crm.Domain.Models;
 using HanumanInstitute.MvvmDialogs;
 using JetBrains.Annotations;
-using ReactiveUI;
 using Task = System.Threading.Tasks.Task;
 
 namespace Crm.Client.ViewModel.Departments;

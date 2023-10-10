@@ -1,11 +1,5 @@
-﻿using System;
-using Crm.Client.Application.Clients;
-using Crm.Client.ViewModel.Common;
-using Crm.Domain;
-using Crm.Domain.Models;
+﻿using Crm.Client.ViewModel.Common;
 using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
-using ReactiveUI;
 
 namespace Crm.Client.ViewModel.Clients;
 
