@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Crm.Client.ViewModel.Common;
 
@@ -8,12 +9,12 @@ public class PageViewModel<T, TDetail> : ViewModelBase, IPageViewModel
 {
     private TDetail _detailViewModel;
     private T _masterViewModel;
+    protected InitializableViewModelFactory _factory;
 
-    protected PageViewModel()
+    protected PageViewModel(InitializableViewModelFactory factory)
     {
-        //todo:
-        //this.WhenAny(x => x.MasterViewModel.CurrentItem) ...
-        MasterViewModel = (T)MainWindowViewModel.ServiceProvider.GetService(typeof(T));
+        _factory = factory;
+        MasterViewModel = _factory.Create<T>();
     }
 
     [UsedImplicitly]
@@ -28,5 +29,10 @@ public class PageViewModel<T, TDetail> : ViewModelBase, IPageViewModel
     {
         get => _detailViewModel;
         set => SetProperty(ref _detailViewModel, value);
+    }
+
+    public override Task InitAsync()
+    {
+        return Task.CompletedTask;
     }
 }

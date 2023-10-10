@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Reactive.Concurrency;
-using System.Threading;
 using System.Threading.Tasks;
 using Crm.Client.Application;
 using Crm.Domain;
@@ -60,15 +58,21 @@ public class ItemsViewModel<T> : ItemsViewModelBase<T>
     protected ItemsViewModel()
     {
     }
-
-    protected override async Task OnLoaded(IScheduler arg1, CancellationToken arg2)
+    
+    public override async Task InitAsync()
     {
         var items = await ItemsService.GetAll();
         Items = new ObservableCollection<T>(items);
     }
 }
 
-public class RelativeItemsViewModel<T, TRelative> : ItemsViewModelBase<TRelative>
+public interface IOwned<T>
+where T: IEntity
+{
+    Task InitFromOwnerAsync(T ownerItem);
+}
+
+public class RelativeItemsViewModel<T, TRelative> : ItemsViewModelBase<TRelative>, IOwned<T>
     where T : class, IEntity
     where TRelative : class, IEntity
 {
@@ -79,8 +83,14 @@ public class RelativeItemsViewModel<T, TRelative> : ItemsViewModelBase<TRelative
     {
     }
 
-    protected override async Task OnLoaded(IScheduler arg1, CancellationToken arg2)
+    public override async Task InitAsync()
     {
         Items = new ObservableCollection<TRelative>(await ItemsService.GetAll(OwnerItem));
+    }
+
+    public async Task InitFromOwnerAsync(T ownerItem)
+    {
+        OwnerItem = ownerItem;
+        await InitAsync();
     }
 }

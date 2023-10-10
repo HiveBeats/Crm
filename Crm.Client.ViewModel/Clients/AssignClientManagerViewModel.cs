@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Reactive.Concurrency;
-using System.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Crm.Client.Application.Clients;
 using Crm.Client.Application.Employees;
 using Crm.Client.ViewModel.Common;
 using Crm.Domain.Models;
 using JetBrains.Annotations;
-using ReactiveUI;
 using Task = System.Threading.Tasks.Task;
 
 namespace Crm.Client.ViewModel.Clients;
 
-public class AssignClientManagerViewModel : ViewModelBase
+public class AssignClientManagerViewModel : ViewModelBase, IOwned<Domain.Models.Client>
 {
     private readonly IClientService _clientService;
     private readonly IEmployeeService _employeeService;
@@ -21,13 +18,11 @@ public class AssignClientManagerViewModel : ViewModelBase
     private Employee _employee;
     private ObservableCollection<Employee> _employees;
 
-    public AssignClientManagerViewModel(Domain.Models.Client client, IClientService clientService,
+    public AssignClientManagerViewModel(IClientService clientService,
         IEmployeeService employeeService)
     {
         _clientService = clientService;
         _employeeService = employeeService;
-        Client = client;
-        RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
         AssignCommand = new AsyncRelayCommand(Assign, CanAssign);
     }
 
@@ -55,6 +50,7 @@ public class AssignClientManagerViewModel : ViewModelBase
     }
     
     public AsyncRelayCommand AssignCommand { get; }
+    
     private async Task Assign()
     {
         if (Employee == null) throw new Exception("Employee should be defined!");
@@ -69,8 +65,14 @@ public class AssignClientManagerViewModel : ViewModelBase
         return Employee is not null ? true : false;
     }
 
-    protected override async Task OnLoaded(IScheduler arg1, CancellationToken arg2)
+    public override async Task InitAsync()
     {
         Employees = new ObservableCollection<Employee>(await _employeeService.GetAll());
+    }
+
+    public async Task InitFromOwnerAsync(Domain.Models.Client ownerItem)
+    {
+        Client = ownerItem;
+        await InitAsync();
     }
 }

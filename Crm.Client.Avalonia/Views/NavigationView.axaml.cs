@@ -1,7 +1,4 @@
 using Avalonia.Controls;
-using Avalonia.ReactiveUI;
-using Crm.Client.ViewModel;
-using ReactiveUI;
 
 namespace Crm.Client.Avalonia.Views;
 

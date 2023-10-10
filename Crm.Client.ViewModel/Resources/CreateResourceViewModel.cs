@@ -1,29 +1,30 @@
-﻿using System;
+﻿using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
 using Crm.Client.Application.Resources;
 using Crm.Client.ViewModel.Common;
-using ReactiveUI;
 
 namespace Crm.Client.ViewModel.Resources;
 
 public class CreateResourceViewModel : ViewModelBase
 {
-    private readonly IObservable<bool> _nameValidation; //todo: validations dictionary in base model
     private readonly IResourceService _resourceService;
-    private IReactiveCommand _createCommand;
     private string _name;
     private decimal _quantity;
 
     public CreateResourceViewModel(IResourceService resourceService)
     {
         _resourceService = resourceService;
-
-        _nameValidation = this.WhenAnyValue(x => x.Name, name => !string.IsNullOrWhiteSpace(name));
+        CreateCommand = new AsyncRelayCommand(Create, CanCreate);
     }
 
     public string Name
     {
         get => _name;
-        set => SetProperty(ref _name, value);
+        set
+        {
+            SetProperty(ref _name, value);
+            CreateCommand.NotifyCanExecuteChanged();
+        }
     }
 
     public decimal Quantity
@@ -32,6 +33,15 @@ public class CreateResourceViewModel : ViewModelBase
         set => SetProperty(ref _quantity, value);
     }
 
-    public IReactiveCommand CreateCommand => _createCommand ??=
-        ReactiveCommand.CreateFromTask(async () => { await _resourceService.Create(Name, Quantity); }, _nameValidation);
+    public AsyncRelayCommand CreateCommand { get; private set; }
+
+    private async Task Create()
+    {
+        await _resourceService.Create(Name, Quantity);
+    }
+    
+    private bool CanCreate()
+    {
+        return !string.IsNullOrEmpty(Name);
+    }
 }

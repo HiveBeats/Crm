@@ -1,12 +1,10 @@
-﻿using System.Reactive;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Crm.Client.ViewModel.Clients;
 using Crm.Client.ViewModel.Common;
 using Crm.Client.ViewModel.Departments;
 using Crm.Client.ViewModel.Resources;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using ReactiveUI;
 
 namespace Crm.Client.ViewModel;
 
@@ -16,13 +14,13 @@ public class NavigationViewModel : ViewModelBase, IPageViewModel
     private readonly DepartmentsViewModel _departmentsViewModel;
     private readonly ResourcesViewModel _resourcesViewModel;
     private ViewModelBase _currentContext;
-    private ReactiveCommand<string, Unit> _navigateCommand;
-
-    public NavigationViewModel()
+    private InitializableViewModelFactory _factory;
+    public NavigationViewModel(InitializableViewModelFactory factory)
     {
-        _resourcesViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<ResourcesViewModel>();
-        _departmentsViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<DepartmentsViewModel>();
-        _clientsViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<ClientsPageViewModel>();
+        _factory = factory;
+        _resourcesViewModel = _factory.Create<ResourcesViewModel>();
+        _departmentsViewModel = _factory.Create<DepartmentsViewModel>();
+        _clientsViewModel = _factory.Create<ClientsPageViewModel>();
         CurrentContext = _clientsViewModel;
         NavigateCommand = new RelayCommand<string>(Navigate);
     }

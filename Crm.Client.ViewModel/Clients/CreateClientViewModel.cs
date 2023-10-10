@@ -1,9 +1,6 @@
-﻿using System;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Crm.Client.Application.Clients;
 using Crm.Client.ViewModel.Common;
-using Crm.Domain.Models;
-using ReactiveUI;
 using Task = System.Threading.Tasks.Task;
 
 namespace Crm.Client.ViewModel.Clients;

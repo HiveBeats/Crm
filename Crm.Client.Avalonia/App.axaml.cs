@@ -6,7 +6,6 @@ using Avalonia.Markup.Xaml;
 using Crm.Client.Application;
 using Microsoft.Extensions.DependencyInjection;
 
-using Crm.Client.Avalonia.ViewModels;
 using Crm.Client.Avalonia.Views;
 using Crm.Client.ViewModel;
 using Crm.Client.ViewModel.Common;

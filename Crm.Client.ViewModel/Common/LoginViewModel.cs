@@ -1,8 +1,6 @@
 ﻿using System.Threading.Tasks;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Crm.Client.Application.Authentication;
-using ReactiveUI;
 
 namespace Crm.Client.ViewModel.Common;
 

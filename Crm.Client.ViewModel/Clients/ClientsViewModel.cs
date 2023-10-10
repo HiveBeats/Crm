@@ -1,11 +1,9 @@
-﻿using System.Reactive.Concurrency;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using Crm.Client.Application.Clients;
 using Crm.Client.ViewModel.Common;
 using HanumanInstitute.MvvmDialogs;
 using JetBrains.Annotations;
-using ReactiveUI;
 
 namespace Crm.Client.ViewModel.Clients;
 
@@ -26,7 +24,6 @@ public partial class ClientsViewModel : ItemsViewModel<Domain.Models.Client>, IP
         _clientOrdersService = clientOrdersService;
         _dialogService = dialogService;
         _mainWindowViewModel = mainWindowViewModel;
-        RxApp.MainThreadScheduler.ScheduleAsync(OnLoaded);
     }
 
     [RelayCommand]
