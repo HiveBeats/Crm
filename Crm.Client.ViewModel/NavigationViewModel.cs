@@ -14,12 +14,13 @@ public class NavigationViewModel : ViewModelBase, IPageViewModel
     private readonly DepartmentsViewModel _departmentsViewModel;
     private readonly ResourcesViewModel _resourcesViewModel;
     private ViewModelBase _currentContext;
-
-    public NavigationViewModel()
+    private InitializableViewModelFactory _factory;
+    public NavigationViewModel(InitializableViewModelFactory factory)
     {
-        _resourcesViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<ResourcesViewModel>();
-        _departmentsViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<DepartmentsViewModel>();
-        _clientsViewModel = MainWindowViewModel.ServiceProvider.GetRequiredService<ClientsPageViewModel>();
+        _factory = factory;
+        _resourcesViewModel = _factory.Create<ResourcesViewModel>();
+        _departmentsViewModel = _factory.Create<DepartmentsViewModel>();
+        _clientsViewModel = _factory.Create<ClientsPageViewModel>();
         CurrentContext = _clientsViewModel;
         NavigateCommand = new RelayCommand<string>(Navigate);
     }

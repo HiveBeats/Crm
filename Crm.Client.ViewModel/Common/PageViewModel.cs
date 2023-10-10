@@ -1,5 +1,5 @@
-﻿using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
+﻿using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Crm.Client.ViewModel.Common;
 
@@ -29,5 +29,10 @@ public class PageViewModel<T, TDetail> : ViewModelBase, IPageViewModel
     {
         get => _detailViewModel;
         set => SetProperty(ref _detailViewModel, value);
+    }
+
+    public override Task InitAsync()
+    {
+        return Task.CompletedTask;
     }
 }
